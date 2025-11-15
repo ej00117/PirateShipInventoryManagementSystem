@@ -11,7 +11,7 @@ import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Role;
  */
 public class User {
 	
-	public static final String NAME_CANNOT_BE_NULL = "name cannot be null.";
+	public static final String NAME_CANNOT_BE_NULL = "user name cannot be null.";
 	public static final String PASSWORD_CANNOT_BE_NULL = "password cannot be null.";
 	private static final String ROLES_CANNOT_BE_NULL = "roles cannot be null.";
 	private static final String ROLES_MUST_CONTAIN_CREWMATE = "must at least be a crewmate.";
@@ -22,8 +22,8 @@ public class User {
 	/**
 	 * Creates a new user with the specified name and password
 	 * 
-	 * @precondition name!=null && password!=null && roles!=null
-	 * @postcondition getName() == name, getPassword == password, getRoles == roles
+	 * @precondition name!=null && password!=null && roles!=null && roles.contains(Role.CREWMATE)
+	 * @postcondition getName() == name && getPassword == password && getRoles == roles
 	 * 
 	 * @param name the name of the user
 	 * @param password the password for the user
