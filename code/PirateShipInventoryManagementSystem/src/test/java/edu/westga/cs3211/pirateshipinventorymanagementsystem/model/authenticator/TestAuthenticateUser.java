@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Authenticator;
 
-class TestAuthentiacteUser {
+class TestAuthenticateUser {
 
 	@Test
 	void testNullName() {
