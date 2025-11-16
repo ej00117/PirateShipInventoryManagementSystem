@@ -6,11 +6,15 @@ import java.util.ResourceBundle;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel.LoginViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * Login code behind
@@ -61,6 +65,31 @@ public class LoginCodeBehind {
     		alert.setHeaderText("Account could not be found");
     		alert.setContentText("No account could be found matching the credentials provided.\nPlease try again.");
     		alert.showAndWait();
+    	} else {
+    		try {
+                URL fxmlLocation = getClass().getResource("/edu/westga/cs3211/pirateshipinventorymanagementsystem/view/landingpage.fxml");
+                FXMLLoader loader = new FXMLLoader(fxmlLocation);
+
+                LandingPageCodeBehind landingPageCodeBehind = new LandingPageCodeBehind(
+                    this.viewModel.getAuthenticator(),
+                    this.nameTextField.getText(),
+                    this.passwordTextField.getText()
+                );
+                loader.setController(landingPageCodeBehind);
+
+                AnchorPane landingPage = loader.load();
+                
+                Stage newStage = new Stage();
+                newStage.setTitle("LandingPage");
+                Scene scene = new Scene(landingPage);
+                newStage.setScene(scene);
+                newStage.show();
+                
+                Stage currentStage = (Stage) this.nameTextField.getScene().getWindow();
+                currentStage.close();
+    		} catch (Exception exc) {
+    			exc.printStackTrace();
+    		}
     	}
     }
 

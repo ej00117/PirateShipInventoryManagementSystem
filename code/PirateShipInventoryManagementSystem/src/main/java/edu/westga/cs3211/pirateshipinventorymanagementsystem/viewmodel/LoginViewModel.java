@@ -59,4 +59,13 @@ public class LoginViewModel {
 	public StringProperty getPasswordProperty() {
 		return this.passwordProperty;
 	}
+	
+	/**
+	 * Returns the authenticator
+	 * 
+	 * @return the authenticator
+	 */
+	public Authenticator getAuthenticator() {
+		return this.authenticator;
+	}
 }
