@@ -22,7 +22,7 @@ class TestGetCompartmentAtType {
 		this.compartments = new ArrayList<Compartment>();
 		this.qualities = new ArrayList<SpecialQuality>();
 		this.qualities.add(SpecialQuality.LIQUID);
-		this.compartments.add(new Compartment(300.0, qualities));
+		this.compartments.add(new Compartment("compartment", 300.0, qualities));
 		this.inventory = new Inventory(this.compartments);
 	}
 	

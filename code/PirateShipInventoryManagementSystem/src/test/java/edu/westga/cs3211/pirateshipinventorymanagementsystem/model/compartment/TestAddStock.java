@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Condition;
@@ -20,7 +19,7 @@ class TestAddStock {
 	void testAddNullStockItem() {
 		ArrayList<SpecialQuality> qualities = new ArrayList<SpecialQuality>();
 		qualities.add(SpecialQuality.LIQUID);
-		Compartment compartment = new Compartment(300.0, qualities);
+		Compartment compartment = new Compartment("compartment", 300.0, qualities);
 		
 		assertThrows(IllegalArgumentException.class, ()->{
 			compartment.addStock(null);});
@@ -30,7 +29,7 @@ class TestAddStock {
 	void testAddStockItemWithIncorrectType() {
 		ArrayList<SpecialQuality> qualities = new ArrayList<SpecialQuality>();
 		qualities.add(SpecialQuality.LIQUID);
-		Compartment compartment = new Compartment(300.0, qualities);
+		Compartment compartment = new Compartment("compartment", 300.0, qualities);
 		
 		ArrayList<SpecialQuality> qualities2 = new ArrayList<SpecialQuality>();
 		qualities2.add(SpecialQuality.PERISHABLE);
@@ -43,7 +42,7 @@ class TestAddStock {
 	void testAddStockItemWithCorrectTypeButThereIsNotSpace() {
 		ArrayList<SpecialQuality> qualities = new ArrayList<SpecialQuality>();
 		qualities.add(SpecialQuality.LIQUID);
-		Compartment compartment = new Compartment(5.0, qualities);
+		Compartment compartment = new Compartment("compartment", 5.0, qualities);
 		
 		Stock stock = new Stock("gold", 10.0, Condition.USABLE, qualities);
 		assertThrows(IllegalArgumentException.class, ()->{
@@ -54,7 +53,7 @@ class TestAddStock {
 	void testAddStockItemWithCorrectType() {
 		ArrayList<SpecialQuality> qualities = new ArrayList<SpecialQuality>();
 		qualities.add(SpecialQuality.LIQUID);
-		Compartment compartment = new Compartment(300.0, qualities);
+		Compartment compartment = new Compartment("compartment", 300.0, qualities);
 		
 		Stock stock = new Stock("gold", 1.0, Condition.USABLE, qualities);
 		

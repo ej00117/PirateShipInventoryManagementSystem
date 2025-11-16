@@ -2,6 +2,7 @@ package edu.westga.cs3211.pirateshipinventorymanagementsystem.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.SpecialQuality;
 
@@ -14,6 +15,7 @@ import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.SpecialQualit
 public class Inventory {
 
 	private static final String COMPARTMENTS_CANNOT_BE_NULL = "compartments cannot be null.";
+	private static final String COMPARTMENTS_CANNOT_HAVE_DUPLICATE_NAME = "compartments cannot have duplicate name identifier.";
 	private static final String TYPE_CANNOT_BE_NULL = "special quality types cannot be null.";
 	private static final String SPACE_CANNOT_BE_NULL = "space required cannot be null.";
 	private static final String SPACE_CANNOT_BE_BELOW_ZERO = "space required cannot be less than zero.";
@@ -23,13 +25,28 @@ public class Inventory {
 	/**
 	 * Creates the inventory with the compartments given
 	 * 
+	 * @precondition compartments!=null && compartments do not have duplicate names in list
+	 * @postcondition this.getCompartments() == compartments
+	 * 
 	 * @param compartments the compartments of the inventory
 	 */
 	public Inventory(ArrayList<Compartment> compartments) {
 		if (compartments == null) {
 			throw new IllegalArgumentException(COMPARTMENTS_CANNOT_BE_NULL);
 		}
+		this.validateNoDuplicateNames(compartments);
+		
 		this.compartments = compartments;
+	}
+	
+	private void validateNoDuplicateNames(ArrayList<Compartment> compartments) {
+		Set<String> names = new HashSet<>();
+		
+		for (Compartment compartment : compartments) {
+			if (!names.add(compartment.getName())) {
+				throw new IllegalArgumentException(COMPARTMENTS_CANNOT_HAVE_DUPLICATE_NAME);
+			}
+		}
 	}
 	
 	/**
