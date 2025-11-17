@@ -1,0 +1,101 @@
+commit 1446d71e25bcf6f834728577074c60bd74f49614
+Author: ej00117 <ej00117@my.westga.edu>
+Date:   Mon Nov 17 01:43:22 2025 -0500
+
+    Tested View Model
+    
+    Tested the different view models and added various finishing touches to part 1 of the project
+
+commit 619d87b90b041b333965b32f1058101cccaeaab3
+Author: ej00117 <ej00117@my.westga.edu>
+Date:   Sun Nov 16 23:32:20 2025 -0500
+
+    Implemented basic sorting features for the view stock changes page
+    
+    Can now sort based off special qualities and user desired in the view stock changes page.
+
+commit ceb8e64e95407d49577d5245108b544f25cf92b2
+Author: ej00117 <ej00117@my.westga.edu>
+Date:   Sun Nov 16 21:44:44 2025 -0500
+
+    Implemented change log saving when a new stock is added to the system
+    
+    View stock changes page is now visible and presents a list of logs from any items added while interacting with the system. View and ViewModel implemented to support just the basic action of listing change logs for now.
+
+commit 245920a0dc8a8d7d711ba7dabede73ed54a3210c
+Author: ej00117 <ej00117@my.westga.edu>
+Date:   Sun Nov 16 20:48:38 2025 -0500
+
+    Implemented view and Model for adding stock page and for the page to list the compartments available to add stock to
+    
+    Now, when the add stock button on the landing page is selected, the user will be prompted to enter details for adding a new stock. The user will not be able to add the stock unless the details are filled out correctly. If there is available space in a compartment for the stock the user wants to add, a new window will pop up with a list of compartments that they may add the stock to. A few model classes were altered as necessary to accomplish this task, with new test cases being written accordingly.
+
+commit acf936302e19e1a990452200b6d334cbd19442c2
+Author: ej00117 <ej00117@my.westga.edu>
+Date:   Sun Nov 16 16:39:58 2025 -0500
+
+    Implemented new FXML, ViewModel, and View for the landing page
+    
+    Updated LoginCodeBehind to pop up the new landing page window once a user makes a successful login attempt. The landing page says hello to the user that logged in and shows them their roles. The add stock and view changes buttons are enabled and disabled automatically depending on the roles of the user that logged into the system.
+
+commit e76e5e59c8939609acc905499c98fb8c3e2a8922
+Author: ej00117 <ej00117@my.westga.edu>
+Date:   Sun Nov 16 14:22:43 2025 -0500
+
+    Updated View, Code Behind, and FXML file to support the login page functionality
+    
+    Updated FXML file, view model, and view to handle the responsibilities necessary for submitting user credentials to log into the system. Deleted the old example files from the starter project as well. On the login page, the submit button is disabled unless a valid, non-blank, username and password combination are entered. Currently, the system pops up an alert if the login was unsuccessfully due to the credentials not being present in the system.
+
+commit 125927376029479d186b211e17583c4c7c4bfa91
+Author: ej00117 <ej00117@my.westga.edu>
+Date:   Sat Nov 15 22:33:24 2025 -0500
+
+    Implemented and Tested ChangeLog and History classes, and updated compartment and inventory for logging
+    
+    Implemented and tested ChangeLog class, which models a change log with details that support the use case scenario. Implemented and tested ChangeHistory, a class that holds a list of ChangeLog items, detailing a history a changes. Updated compartment to include a name field and updated inventory to ensure that compartments in the list have unique names.
+
+commit c90ae93859c8832f009b7260916d18f46f37687a
+Author: ej00117 <ej00117@my.westga.edu>
+Date:   Sat Nov 15 16:56:52 2025 -0500
+
+    Implemented and Tested Compartment and Inventory classes
+    
+    Implemented and Tested two new classes that define the storage compartments for different types of special quality stock items. The compartment itself holds a specific capacity of items of a specific type or combination of types. The inventory class holds the list of these compartments and manages all of them. Also refactored the name of an unrelated test case that I mispelt earlier.
+
+commit ad73aa2fcccd53eb32912d9901e9479da62cf637
+Author: ej00117 <ej00117@my.westga.edu>
+Date:   Sat Nov 15 14:27:32 2025 -0500
+
+    Implemented and Tested Stock and PerishableStock classes
+    
+    Added two new classes and tested them rigorously. Stock class models a regular, non-perishable, stock and thus does not have an expiration date. PerishableStock extends Stock and adds functionality to track the expiration date of the stock. Created two new enums, Condition and SpecialQuality to help with defining the attributes, namely the condition and special qualities of a Stock or PerishableStock item..
+
+commit 3084bde5e93e380065570d5030b6a1af238aea35
+Author: ej00117 <ej00117@my.westga.edu>
+Date:   Sat Nov 15 00:56:29 2025 -0500
+
+    Implemented and Tested User and Authenticator Model Classes
+    
+    Implemented and Tested two new model classes to provide business logic for logging into the system. User class models a user, with a name, password, and an arraylist of roles, from a newly created Role enum. The authenticator class stores the list of users in the system, with two example users being initialized in the constructor. Authenticator has two methods, one for authenticating a user's provided credentials and another to be used for getting the roles from a user stored in the list.
+
+commit 63b07640c64b9c064fcebdb46cef37b37ebe66fd
+Author: ej00117 <ej00117@my.westga.edu>
+Date:   Fri Nov 14 22:41:38 2025 -0500
+
+    Updated README
+    
+    Updated README to provide a brief description of the project details.
+
+commit 0daefcb41eface802185a5abe95c3151ffd26ba8
+Author: Ezra Benjamin Jones <ej00117@my.westga.edu>
+Date:   Fri Nov 14 19:46:28 2025 -0500
+
+    Initial Commit
+    
+    Setup sample project.
+
+commit 88a1e643ddd6a3a006d4815d3936c67f323e2217
+Author: ej00117 <ej00117@my.westga.edu>
+Date:   Fri Nov 14 19:35:02 2025 -0500
+
+    Initial commit
