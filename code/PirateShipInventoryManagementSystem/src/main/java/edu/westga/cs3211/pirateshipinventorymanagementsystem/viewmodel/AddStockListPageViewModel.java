@@ -1,8 +1,11 @@
 package edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Change;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ChangeHistory;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ChangeLog;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Compartment;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Stock;
 import javafx.beans.property.ObjectProperty;
@@ -20,6 +23,8 @@ public class AddStockListPageViewModel {
 	private ObservableList<Compartment> compartments;
 	private ObjectProperty<Compartment> selectedCompartment;
 	private Stock stockToAdd;
+	private ChangeHistory history;
+	private String user;
 	
 	/**
 	 * Instantiates a new add stock compartment list page view model
@@ -27,11 +32,14 @@ public class AddStockListPageViewModel {
 	 * @param compartments the compartments to list out
 	 * @param history the history to log changes to
 	 * @param stockToAdd the stock to add
+	 * @param user the user adding the stock
 	 */
-	public AddStockListPageViewModel(ArrayList<Compartment> compartments, ChangeHistory history, Stock stockToAdd) {
+	public AddStockListPageViewModel(ArrayList<Compartment> compartments, ChangeHistory history, Stock stockToAdd, String user) {
 		this.compartments = FXCollections.observableArrayList(compartments);
 		this.selectedCompartment = new SimpleObjectProperty<Compartment>(this.compartments.getFirst());
 		this.stockToAdd = stockToAdd;
+		this.history = history;
+		this.user = user;
 	}
 	
 	/**
@@ -39,6 +47,8 @@ public class AddStockListPageViewModel {
 	 */
 	public void addStock() {
 		this.selectedCompartment.get().addStock(this.stockToAdd);
+		this.history.getHistory().add(new ChangeLog(this.user, this.stockToAdd, Change.ADDED, this.selectedCompartment.get().getName(),
+				this.getSelectedCompartment().get().getFreeSpace(), LocalDateTime.now()));
 	}
 
 	/**

@@ -61,7 +61,8 @@ public class LandingPageCodeBehind {
 
             AddStockPageCodeBehind addStockPageCodeBehind = new AddStockPageCodeBehind(
                 this.viewModel.getInventory(),
-                this.viewModel.getHistory()
+                this.viewModel.getHistory(),
+                this.viewModel.getName()
             );
             loader.setController(addStockPageCodeBehind);
 
@@ -79,7 +80,23 @@ public class LandingPageCodeBehind {
 
     @FXML
     void onViewHistory(ActionEvent event) {
+    	try {
+            URL fxmlLocation = getClass().getResource("/edu/westga/cs3211/pirateshipinventorymanagementsystem/view/viewchangehistory.fxml");
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
 
+            ViewChangeHistoryCodeBehind viewChangeHistoryCodeBehind = new ViewChangeHistoryCodeBehind(this.viewModel.getHistory());
+            loader.setController(viewChangeHistoryCodeBehind);
+
+            AnchorPane viewChangesPage = loader.load();
+            
+            Stage newStage = new Stage();
+            newStage.setTitle("ViewChangeHistoryPage");
+            Scene scene = new Scene(viewChangesPage);
+            newStage.setScene(scene);
+            newStage.show();
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
     }
 
     @FXML

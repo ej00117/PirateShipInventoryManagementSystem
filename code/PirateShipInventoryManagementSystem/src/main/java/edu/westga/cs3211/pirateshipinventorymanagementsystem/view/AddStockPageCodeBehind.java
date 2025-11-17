@@ -78,9 +78,10 @@ public class AddStockPageCodeBehind {
 	 * 
 	 * @param inventory the inventory to add stock to
 	 * @param history the history to log the change in
+	 * @param user the user attempting to add 
 	 */
-	public AddStockPageCodeBehind(Inventory inventory, ChangeHistory history) {
-		this.viewModel = new AddStockPageViewModel(inventory, history);
+	public AddStockPageCodeBehind(Inventory inventory, ChangeHistory history, String user) {
+		this.viewModel = new AddStockPageViewModel(inventory, history, user);
 	}
 
 	@FXML
@@ -97,7 +98,7 @@ public class AddStockPageCodeBehind {
 			Stock stockToAdd = this.viewModel.prepareStockForInventory();
 			AddStockListPageCodeBehind addStockListPageCodeBehind = new AddStockListPageCodeBehind(
 					this.viewModel.getInventory().getCompartmentsAtType(stockToAdd.getSpecialQualities(), stockToAdd.getQuantity()),
-					this.viewModel.getHistory(), stockToAdd);
+					this.viewModel.getHistory(), stockToAdd, this.viewModel.getUser());
 			loader.setController(addStockListPageCodeBehind);
 
 			AnchorPane addStockListPage = loader.load();

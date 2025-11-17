@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="396.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="154.0" layoutY="29.0" text="View Change History">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ListView fx:id="changeLogListView" layoutX="10.0" layoutY="90.0" prefHeight="212.0" prefWidth="451.0" />
+      <Button fx:id="backButton" layoutX="216.0" layoutY="328.0" mnemonicParsing="false" onAction="#onCancel" text="Exit">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Label layoutX="14.0" layoutY="311.0" text="Sort Options" />
+      <CheckBox fx:id="isPerishable" layoutX="11.0" layoutY="328.0" mnemonicParsing="false" text="Perishables" />
+      <CheckBox fx:id="isLiquid" layoutX="11.0" layoutY="343.0" mnemonicParsing="false" text="Liquids" />
+      <CheckBox fx:id="isFlammable" layoutX="11.0" layoutY="360.0" mnemonicParsing="false" text="Flammables" />
+      <ComboBox fx:id="userComboBox" layoutX="311.0" layoutY="307.0" prefWidth="150.0" promptText="Specific User" />
+   </children>
+
+
+</AnchorPane>

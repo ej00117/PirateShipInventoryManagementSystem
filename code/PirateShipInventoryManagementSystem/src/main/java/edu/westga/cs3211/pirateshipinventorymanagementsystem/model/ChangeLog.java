@@ -119,4 +119,19 @@ public class ChangeLog {
 	public LocalDateTime getTimeOfChange() {
 		return this.timeOfChange;
 	}
+	
+	/**
+	 * toString formats log
+	 * 
+	 * @return formatted string
+	 */
+	public String toString() {
+		String text = "User: " + this.userName;
+		text += ", Stock Info: " + this.stockInfo.toString();
+		text += ", Change: " + this.change;
+		text += ", Compartment: " + this.compartmentName;
+		text += ", Capacity Remaining: " + this.capacityRemaining;
+		text += ", Time: " + this.timeOfChange;
+		return text;
+	}
 }

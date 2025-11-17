@@ -37,14 +37,16 @@ public class AddStockPageViewModel {
 	private ObjectProperty<Condition> selectedCondition;
 	private ArrayList<SpecialQuality> qualities;
 	private Stock stock;
+	private String user;
 	
 	/**
 	 * Instantiates a new add stock view model
 	 * 
 	 * @param inventory the inventory to add stock to
 	 * @param history the change log history for logging new stock
+	 * @param user the user adding the stock
 	 */
-	public AddStockPageViewModel(Inventory inventory, ChangeHistory history) {
+	public AddStockPageViewModel(Inventory inventory, ChangeHistory history, String user) {
 		this.inventory = inventory;
 		this.history = history;
 		this.name = new SimpleStringProperty("");
@@ -56,6 +58,7 @@ public class AddStockPageViewModel {
 		this.isLiquid = new SimpleBooleanProperty(false);
 		this.isFlammable = new SimpleBooleanProperty(false);
 		this.selectedCondition = new SimpleObjectProperty<>(Condition.PERFECT);
+		this.user = user;
 	}
 	
 	/**
@@ -200,5 +203,14 @@ public class AddStockPageViewModel {
 	 */
 	public Inventory getInventory() {
 		return this.inventory;
+	}
+
+	/**
+	 * Returns the name of the user
+	 * 
+	 * @return the name of the user making the change
+	 */
+	public String getUser() {
+		return this.user;
 	}
 }

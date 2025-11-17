@@ -67,5 +67,6 @@ class TestConstructor {
 		assertEquals(log.getCompartmentName(), "compartment", "checking the compartment name");
 		assertEquals(log.getCapacityRemaining(), 250.0, "checking the capacity remaining");
 		assertEquals(log.getTimeOfChange(), LocalDateTime.of(2025, 12, 24, 14, 30), "checking the time of change");
+		assertTrue(log.toString().length() > 0);
 	}
 }

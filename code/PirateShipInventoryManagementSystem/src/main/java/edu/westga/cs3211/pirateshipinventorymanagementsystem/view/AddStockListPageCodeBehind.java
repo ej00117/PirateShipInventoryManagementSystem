@@ -45,9 +45,10 @@ public class AddStockListPageCodeBehind {
      * @param compartments the compartments to choose from
      * @param history the history to log the changes in
      * @param stockToAdd the stock to add
+     * @param user the user adding the stock
      */
-    public AddStockListPageCodeBehind(ArrayList<Compartment> compartments, ChangeHistory history, Stock stockToAdd) {
-    	this.viewModel = new AddStockListPageViewModel(compartments, history, stockToAdd);
+    public AddStockListPageCodeBehind(ArrayList<Compartment> compartments, ChangeHistory history, Stock stockToAdd, String user) {
+    	this.viewModel = new AddStockListPageViewModel(compartments, history, stockToAdd, user);
     }
     
     @FXML
