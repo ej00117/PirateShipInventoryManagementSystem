@@ -15,7 +15,9 @@ import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.SpecialQualit
 public class Inventory {
 
 	private static final String COMPARTMENTS_CANNOT_BE_NULL = "compartments cannot be null.";
+	private static final String NAME_CANNOT_BE_NULL = "compartment name cannot be null.";
 	private static final String COMPARTMENTS_CANNOT_HAVE_DUPLICATE_NAME = "compartments cannot have duplicate name identifier.";
+	private static final String STOCK_CANNOT_BE_NULL = "stock cannot be null.";
 	private static final String TYPE_CANNOT_BE_NULL = "special quality types cannot be null.";
 	private static final String SPACE_CANNOT_BE_NULL = "space required cannot be null.";
 	private static final String SPACE_CANNOT_BE_BELOW_ZERO = "space required cannot be less than zero.";
@@ -50,16 +52,37 @@ public class Inventory {
 	}
 	
 	/**
-	 * Gets the compartment with the desired type if it has enough space.
+	 * Adds stock to a compartment based on the compartments name
+	 * 
+	 * @param compartmentName the name of the compartment
+	 * @param stock the stock to add
+	 */
+	public void addStock(String compartmentName, Stock stock) {
+		if (compartmentName == null) {
+			throw new IllegalArgumentException(NAME_CANNOT_BE_NULL);
+		}
+		if (stock == null) {
+			throw new IllegalArgumentException(STOCK_CANNOT_BE_NULL);
+		}
+		for (Compartment compartment : this.compartments) {
+			if (compartment.getName().equals(compartmentName)) {
+				compartment.addStock(stock);
+			}
+		}
+	}
+
+	/**
+	 * Gets the compartments with the desired type if it has enough space.
 	 * 
 	 * @precondition type!=null && spaceRequired!=null && spaceRequired >= 0 && compartment can be found
 	 * @postcondition none
 	 * 
 	 * @param type the type of the compartment
 	 * @param spaceRequired the space required in the desired compartment
-	 * @return the compartment 
+	 * @return the compartments 
 	 */
-	public Compartment getCompartmentAtType(ArrayList<SpecialQuality> type, Double spaceRequired) {
+	public ArrayList<Compartment> getCompartmentsAtType(ArrayList<SpecialQuality> type, Double spaceRequired) {
+		ArrayList<Compartment> compartments = new ArrayList<Compartment>();
 		if (type == null) {
 			throw new IllegalArgumentException(TYPE_CANNOT_BE_NULL);
 		}
@@ -73,9 +96,12 @@ public class Inventory {
 		for (Compartment compartment : this.compartments) {
 			if (new HashSet<>(compartment.getType()).equals(new HashSet<>(type))) {
 				if (compartment.getFreeSpace() >= spaceRequired) {
-					return compartment;
+					compartments.add(compartment);
 				}
 			}
+		}
+		if (!compartments.isEmpty()) {
+			return compartments;
 		}
 		throw new IllegalArgumentException(COMPARTMENT_CANNOT_BE_FOUND);
 	}

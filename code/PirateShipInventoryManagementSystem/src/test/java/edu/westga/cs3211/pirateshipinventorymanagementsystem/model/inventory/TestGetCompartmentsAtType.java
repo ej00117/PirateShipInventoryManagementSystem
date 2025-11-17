@@ -11,7 +11,7 @@ import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.SpecialQualit
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Compartment;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Inventory;
 
-class TestGetCompartmentAtType {
+class TestGetCompartmentsAtType {
 
 	private Inventory inventory;
 	private ArrayList<Compartment> compartments;
@@ -29,41 +29,41 @@ class TestGetCompartmentAtType {
 	@Test
 	void testGetCompartmentAtTypeNullSpecialQualities() {
 		assertThrows(IllegalArgumentException.class, ()->{
-			this.inventory.getCompartmentAtType(null, 30.0);});
+			this.inventory.getCompartmentsAtType(null, 30.0);});
 	}
 	
 	@Test
 	void testGetCompartmentAtTypeNullSpaceRequired() {
 		assertThrows(IllegalArgumentException.class, ()->{
-			this.inventory.getCompartmentAtType(this.qualities, null);});
+			this.inventory.getCompartmentsAtType(this.qualities, null);});
 	}
 	
 	@Test
 	void testGetCompartmentAtTypeWithSpaceRequiredBelowZero() {
 	
 		assertThrows(IllegalArgumentException.class, ()->{
-			this.inventory.getCompartmentAtType(this.qualities, -1.0);});
+			this.inventory.getCompartmentsAtType(this.qualities, -1.0);});
 	}
 	
 	@Test
 	void testGetCompartmentAtTypeButCompartmentSpecifiedIsNotInSystem() {
 	
 		assertThrows(IllegalArgumentException.class, ()->{
-			this.inventory.getCompartmentAtType(new ArrayList<SpecialQuality>(), 10.0);});
+			this.inventory.getCompartmentsAtType(new ArrayList<SpecialQuality>(), 10.0);});
 	}
 	
 	@Test
 	void testGetCompartmentAtTypeButSpaceRequiredIsGreaterThanSpaceAvailable() {
 	
 		assertThrows(IllegalArgumentException.class, ()->{
-			this.inventory.getCompartmentAtType(this.qualities, 301.0);});
+			this.inventory.getCompartmentsAtType(this.qualities, 301.0);});
 	}
 	
 	@Test
 	void testGetCompartmentAtTypeWithtValidParametersAndInSystem() {
 	
-		Compartment newCompartment = this.inventory.getCompartmentAtType(this.qualities, 10.0);
-		assertTrue(this.inventory.getCompartments().contains(newCompartment), "checking that compartment is in list");
+		ArrayList<Compartment> compartments = this.inventory.getCompartmentsAtType(this.qualities, 10.0);
+		assertTrue(this.inventory.getCompartments().contains(compartments.getFirst()), "checking that compartment is in list");
 	}
 
 }

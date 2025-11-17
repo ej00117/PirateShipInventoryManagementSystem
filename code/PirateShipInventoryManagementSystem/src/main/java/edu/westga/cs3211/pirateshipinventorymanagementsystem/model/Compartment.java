@@ -113,4 +113,15 @@ public class Compartment {
 	public String getName() {
 		return this.name;
 	}
+	
+	/**
+	 * Basic toString for compartments
+	 * 
+	 * @return formatted string
+	 */
+	public String toString() {
+		String text = "Name: " + this.name;
+		text += ", Capacity Available: " + this.getFreeSpace();
+		return text;
+	}
 }

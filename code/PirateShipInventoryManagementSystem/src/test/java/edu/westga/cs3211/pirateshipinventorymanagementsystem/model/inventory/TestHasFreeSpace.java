@@ -37,7 +37,7 @@ class TestHasFreeSpace {
 	@Test
 	void testHasFreeSpaceButThereIsNoFreeSpace() {
 		Stock stock = new Stock("water", 300.0, Condition.PERFECT, this.qualities);
-		this.inventory.getCompartmentAtType(this.qualities, 300.0).addStock(stock);
+		this.inventory.getCompartmentsAtType(this.qualities, 300.0).getFirst().addStock(stock);
 		
 		assertTrue(!inventory.hasFreeSpace(this.qualities));
 	}

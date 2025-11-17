@@ -6,9 +6,13 @@ import java.util.ResourceBundle;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Authenticator;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel.LandingPageViewModel;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.event.ActionEvent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * Landing page code behind
@@ -51,7 +55,26 @@ public class LandingPageCodeBehind {
     
     @FXML
     void onAddStock(ActionEvent event) {
+    	try {
+            URL fxmlLocation = getClass().getResource("/edu/westga/cs3211/pirateshipinventorymanagementsystem/view/addstockpage.fxml");
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
 
+            AddStockPageCodeBehind addStockPageCodeBehind = new AddStockPageCodeBehind(
+                this.viewModel.getInventory(),
+                this.viewModel.getHistory()
+            );
+            loader.setController(addStockPageCodeBehind);
+
+            AnchorPane addStockPage = loader.load();
+            
+            Stage newStage = new Stage();
+            newStage.setTitle("LandingPage");
+            Scene scene = new Scene(addStockPage);
+            newStage.setScene(scene);
+            newStage.show();
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
     }
 
     @FXML

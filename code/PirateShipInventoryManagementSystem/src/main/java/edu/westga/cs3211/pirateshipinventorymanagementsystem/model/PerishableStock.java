@@ -55,5 +55,17 @@ public class PerishableStock extends Stock {
 	public LocalDate getExpirationDate() {
 		return this.expirationDate;
 	}
+	
+	/**
+	 * To string for stock items
+	 * 
+	 * @return formatted string
+	 */
+	@Override
+	public String toString() {
+		String text = super.toString();
+		text += ", Expiration Date: " + this.expirationDate.toString();
+		return text;
+	}
 
 }

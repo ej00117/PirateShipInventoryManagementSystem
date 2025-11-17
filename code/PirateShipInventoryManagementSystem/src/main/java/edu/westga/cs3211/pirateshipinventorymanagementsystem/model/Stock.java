@@ -101,4 +101,21 @@ public class Stock {
 	public ArrayList<SpecialQuality> getSpecialQualities() {
 		return this.specialQualities;
 	}
+	
+	/**
+	 * To string for stock items
+	 * 
+	 * @return formatted string
+	 */
+	public String toString() {
+		String text = "Name: " + this.name + ", ";
+		text += "Quantity: " + this.quantity + ", ";
+		text += "Condition: " + this.condition + ", ";
+		if (!this.specialQualities.isEmpty()) {
+			text += "Special Qualities: " + this.specialQualities;
+		} else {
+			text += "Special Qualities: NONE";
+		}
+		return text;
+	}
 }
