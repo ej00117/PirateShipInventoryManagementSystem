@@ -26,6 +26,8 @@
       <CheckBox fx:id="isLiquid" layoutX="11.0" layoutY="343.0" mnemonicParsing="false" text="Liquids" />
       <CheckBox fx:id="isFlammable" layoutX="11.0" layoutY="360.0" mnemonicParsing="false" text="Flammables" />
       <ComboBox fx:id="userComboBox" layoutX="311.0" layoutY="307.0" prefWidth="150.0" promptText="Specific User" />
+      <Button fx:id="sortButton" layoutX="311.0" layoutY="339.0" mnemonicParsing="false" onAction="#onSort" text="Sort" />
+      <Button fx:id="resetButton" layoutX="416.0" layoutY="339.0" mnemonicParsing="false" onAction="#onReset" text="Reset" />
    </children>
 
 
