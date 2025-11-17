@@ -47,6 +47,7 @@ public class ViewChangeHistoryViewModel {
 		this.allLogs = this.history.getHistory();
 		this.filteredLogs = this.allLogs;
 		this.getUsersForComboBox();
+		this.selectedUsers = new ArrayList<String>();
 	}
 
 	/**

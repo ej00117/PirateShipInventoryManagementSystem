@@ -68,4 +68,22 @@ public class AddStockListPageViewModel {
 	public ObservableList<Compartment> getCompartments() {
 		return this.compartments;
 	}
+	
+	/**
+	 * Returns the stock to add
+	 * 
+	 * @return the stock to add
+	 */
+	public Stock getStockToAdd() {
+		return this.stockToAdd;
+	}
+	
+	/**
+	 * Returns the user
+	 * 
+	 * @return the user
+	 */
+	public String getUser() {
+		return this.user;
+	}
 }
