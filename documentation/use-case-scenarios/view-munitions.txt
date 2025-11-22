@@ -1,0 +1,16 @@
+View Munitions
+
+Context:
+Officer is logged in
+
+Primary Flow:
+
+1. Officer requests to view items
+2. System presents officer with a list of all the munitions items
+3. Officer views list of munitions items
+
+Alternative Flows:
+
+There are no munitions items in the inventory
+A2. System displays a message stating there are no munitions items in the inventory yet
+A3. Officer acknowledges the message

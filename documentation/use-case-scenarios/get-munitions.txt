@@ -1,0 +1,37 @@
+Get Munitions
+
+Context:
+Officer is logged in
+Officer is on the view inventory page
+
+Primary Flow:
+
+1. Officer selects a munitions item from the list
+2. Officer requests to retrieve munitions from item on the list
+3. System prompts the officer to enter the quantity from the selected munitions they would like to take
+4. Officer enters a valid quantity and submits request
+5. System subtracts the quantity taken from the munitions item on the list, removing the munitions item
+from the list entirely if all quantity was taken
+
+Alternative Flows:
+
+There are no munitions items left in list
+A1. The button to request to retrieve munitions is disabled
+
+No munitions item in the list is selected
+A1. The button to request to retrieve munitions is disabled
+
+Officer requests higher quantity than exists in munitions item
+A4. Officer enters a quantity higher than available
+A5. System notifies the officer that the requested quantity is too high, and shows the max available
+A6. Officer acknowledges the message
+A7. Return to primary flow step 3
+
+Officer provides no input for quantity
+A4. Officer does not enter a quantity or leaves the field blank
+A5. Submit button is disabled until officer provides input
+
+Officer provides invalid input
+A4. Officer enters invalid input and presses submit
+A5. System notifies the officer that the submitted value is invalid, with appropriate message
+A6. Return to primary flow step 3

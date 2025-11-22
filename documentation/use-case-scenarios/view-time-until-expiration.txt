@@ -1,0 +1,16 @@
+View Time Until Expiration
+
+Context:
+Cook is logged in
+Cook is on the view inventory page
+
+Primary Flow:
+
+1. Cook requests to sort the food items in order of soonest to expire
+2. System presents cook with reordered list, showing food items soonest to expire first
+3. Cook views list of food items
+
+Alternative Flows:
+
+There are less than 2 perishable food items in the list
+A1. The option to sort the food items in order of soonest to expire is disabled.
