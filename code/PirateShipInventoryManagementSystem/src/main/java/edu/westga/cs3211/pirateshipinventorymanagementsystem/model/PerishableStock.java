@@ -3,6 +3,7 @@ package edu.westga.cs3211.pirateshipinventorymanagementsystem.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Condition;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.ItemCategory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.SpecialQuality;
 
 /**
@@ -25,13 +26,14 @@ public class PerishableStock extends Stock {
 	 * 
 	 * @param name the name of the perishable stock
 	 * @param quantity the quantity of the perishable stock
+	 * @param category the category of the perishable stock
 	 * @param condition the condition of the perishable stock
 	 * @param specialQualities the special qualities of the perishable stock
 	 * @param expirationDate the expiration date of the stock
 	 */
-	public PerishableStock(String name, Double quantity, Condition condition,
+	public PerishableStock(String name, Double quantity, ItemCategory category, Condition condition,
 			ArrayList<SpecialQuality> specialQualities, LocalDate expirationDate) {
-		super(name, quantity, condition, specialQualities);
+		super(name, quantity, category, condition, specialQualities);
 		
 		this.validateSpecialQualities(specialQualities);
 		if (expirationDate == null) {

@@ -8,6 +8,8 @@ import edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel.AddStockL
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Change;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.SpecialQuality;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Condition;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.ItemCategory;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +46,7 @@ public class TestAddStockListPageViewModel {
 
         ArrayList<SpecialQuality> stockQualities = new ArrayList<>();
         stockQualities.add(SpecialQuality.FLAMMABLE);
-        this.stock = new Stock("cannonballs", 50.0, Condition.USABLE, stockQualities);
+        this.stock = new Stock("cannonballs", 50.0, ItemCategory.OTHER, Condition.USABLE, stockQualities);
 
         this.viewModel = new AddStockListPageViewModel(compartments, this.history, this.stock, this.user);
     }

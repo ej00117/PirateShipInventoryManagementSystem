@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Condition;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.ItemCategory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.SpecialQuality;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Compartment;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.PerishableStock;
@@ -33,7 +34,7 @@ class TestAddStock {
 		
 		ArrayList<SpecialQuality> qualities2 = new ArrayList<SpecialQuality>();
 		qualities2.add(SpecialQuality.PERISHABLE);
-		PerishableStock stock = new PerishableStock("apple", 1.0, Condition.USABLE, qualities2, LocalDate.of(2025, 12, 24));
+		PerishableStock stock = new PerishableStock("apple", 1.0, ItemCategory.FOOD, Condition.USABLE, qualities2, LocalDate.of(2025, 12, 24));
 		assertThrows(IllegalArgumentException.class, ()->{
 			compartment.addStock(stock);});
 	}
@@ -44,7 +45,7 @@ class TestAddStock {
 		qualities.add(SpecialQuality.LIQUID);
 		Compartment compartment = new Compartment("compartment", 5.0, qualities);
 		
-		Stock stock = new Stock("gold", 10.0, Condition.USABLE, qualities);
+		Stock stock = new Stock("gold", 10.0, ItemCategory.OTHER, Condition.USABLE, qualities);
 		assertThrows(IllegalArgumentException.class, ()->{
 			compartment.addStock(stock);});
 	}
@@ -55,7 +56,7 @@ class TestAddStock {
 		qualities.add(SpecialQuality.LIQUID);
 		Compartment compartment = new Compartment("compartment", 300.0, qualities);
 		
-		Stock stock = new Stock("gold", 1.0, Condition.USABLE, qualities);
+		Stock stock = new Stock("gold", 1.0, ItemCategory.OTHER, Condition.USABLE, qualities);
 		
 		assertTrue(compartment.addStock(stock));
 		assertTrue(compartment.getItems().contains(stock));
