@@ -57,5 +57,17 @@ class TestConstructor {
 		assertTrue(user.getRoles().contains(Role.CREWMATE), "checking is crewmate");
 		assertTrue(user.getRoles().contains(Role.COOK), "checking is cook");
 	}
+	
+	@Test
+	void testValidOfficer() {
+		ArrayList<Role> roles = new ArrayList<Role>();
+		roles.add(Role.CREWMATE);
+		roles.add(Role.OFFICER);
+		User user = new User("name", "password", roles);
+		assertEquals("name", user.getName(), "checking name of the user");
+		assertEquals("password", user.getPassword(), "checking name of the user");
+		assertTrue(user.getRoles().contains(Role.CREWMATE), "checking is crewmate");
+		assertTrue(user.getRoles().contains(Role.OFFICER), "checking is officer");
+	}
 
 }
