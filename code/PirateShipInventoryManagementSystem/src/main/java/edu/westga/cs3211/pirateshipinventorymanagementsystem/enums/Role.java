@@ -7,5 +7,5 @@ package edu.westga.cs3211.pirateshipinventorymanagementsystem.enums;
  * @version Fall 2025
  */
 public enum Role {
-	CREWMATE, QUARTERMASTER, COOK
+	CREWMATE, QUARTERMASTER, COOK, OFFICER
 }
