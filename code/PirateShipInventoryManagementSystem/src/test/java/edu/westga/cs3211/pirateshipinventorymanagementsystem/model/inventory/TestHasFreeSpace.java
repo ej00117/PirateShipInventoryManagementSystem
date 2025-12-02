@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Condition;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.ItemCategory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.SpecialQuality;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Compartment;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Inventory;
@@ -36,7 +37,7 @@ class TestHasFreeSpace {
 	
 	@Test
 	void testHasFreeSpaceButThereIsNoFreeSpace() {
-		Stock stock = new Stock("water", 300.0, Condition.PERFECT, this.qualities);
+		Stock stock = new Stock("water", 300.0, ItemCategory.OTHER, Condition.PERFECT, this.qualities);
 		this.inventory.getCompartmentsAtType(this.qualities, 300.0).getFirst().addStock(stock);
 		
 		assertTrue(!inventory.hasFreeSpace(this.qualities));

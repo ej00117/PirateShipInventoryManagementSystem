@@ -8,6 +8,8 @@ import edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel.ViewChang
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Change;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.SpecialQuality;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Condition;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.ItemCategory;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
@@ -26,10 +28,10 @@ public class TestViewChangeHistory {
 
     @BeforeEach
     void setUp() {
-        this.regularStock = new Stock("cannonballs", 50.0, Condition.USABLE, new ArrayList<SpecialQuality>());
+        this.regularStock = new Stock("cannonballs", 50.0, ItemCategory.OTHER, Condition.USABLE, new ArrayList<SpecialQuality>());
         this.log1 = new ChangeLog("user1", regularStock, Change.ADDED, "compartment1", 100.0, LocalDateTime.now());
         this.log2 = new ChangeLog("user2", regularStock, Change.REMOVED, "compartment2", 50.0, LocalDateTime.now());
-        this.perishableStock = new PerishableStock("spoiled food", 30.0, Condition.USABLE, 
+        this.perishableStock = new PerishableStock("spoiled food", 30.0, ItemCategory.FOOD, Condition.USABLE, 
             new ArrayList<SpecialQuality>(Collections.singletonList(SpecialQuality.PERISHABLE)), LocalDateTime.now().toLocalDate());
         this.log3 = new ChangeLog("user3", perishableStock, Change.ADDED, "compartment3", 30.0, LocalDateTime.now());
 

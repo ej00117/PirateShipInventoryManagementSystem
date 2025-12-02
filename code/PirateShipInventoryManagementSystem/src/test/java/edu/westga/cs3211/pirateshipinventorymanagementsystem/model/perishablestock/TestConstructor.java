@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Condition;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.ItemCategory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.SpecialQuality;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.PerishableStock;
 
@@ -18,20 +19,20 @@ class TestConstructor {
 		ArrayList<SpecialQuality> qualities = new ArrayList<SpecialQuality>();
 		qualities.add(SpecialQuality.PERISHABLE);
 		assertThrows(IllegalArgumentException.class, ()->{
-			new PerishableStock("apple", 2.0, Condition.USABLE, qualities, null);});
+			new PerishableStock("apple", 2.0, ItemCategory.FOOD, Condition.USABLE, qualities, null);});
 	}
 	
 	@Test
 	void testCreatePerishableStockWithoutAddingPerishableQuality() {
 		assertThrows(IllegalArgumentException.class, ()->{
-			new PerishableStock("apple", 2.0, Condition.USABLE, new ArrayList<SpecialQuality>(), LocalDate.now());});
+			new PerishableStock("apple", 2.0, ItemCategory.FOOD, Condition.USABLE, new ArrayList<SpecialQuality>(), LocalDate.now());});
 	}
 
 	@Test
 	void testCreateValidPerishableStock() {
 		ArrayList<SpecialQuality> qualities = new ArrayList<SpecialQuality>();
 		qualities.add(SpecialQuality.PERISHABLE);
-		PerishableStock stock = new PerishableStock("apple", 1.0, Condition.USABLE, qualities, LocalDate.of(2025, 12, 24));
+		PerishableStock stock = new PerishableStock("apple", 1.0, ItemCategory.FOOD, Condition.USABLE, qualities, LocalDate.of(2025, 12, 24));
 		
 		assertEquals(stock.getName(), "apple", "checking the name");
 		assertEquals(stock.getQuantity(), 1.0, "checking the quantity");

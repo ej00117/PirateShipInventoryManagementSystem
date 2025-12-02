@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Condition;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.ItemCategory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.SpecialQuality;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ChangeHistory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Inventory;
@@ -82,13 +83,13 @@ public class AddStockPageViewModel {
 	private void stageRegularStockForAdding() {
 		Double quantity = Double.parseDouble(this.quantity.get());
 		this.stock = new Stock(
-				this.name.get(), quantity, this.getSelectedCondition().get(), this.qualities);
+				this.name.get(), quantity, ItemCategory.OTHER, this.getSelectedCondition().get(), this.qualities);
 	}	
 	
 	private void stagePerishableStockForAdding() {
 		Double quantity = Double.parseDouble(this.quantity.get());
 		this.stock = new PerishableStock(
-				this.name.get(), quantity, this.getSelectedCondition().get(), this.qualities, 
+				this.name.get(), quantity, ItemCategory.OTHER, this.getSelectedCondition().get(), this.qualities, 
 				LocalDate.of(Integer.parseInt(this.year.get()), Integer.parseInt(this.month.get()), Integer.parseInt(this.day.get())));
 	}
 	

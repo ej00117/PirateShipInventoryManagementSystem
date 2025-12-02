@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Change;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Condition;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.ItemCategory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.SpecialQuality;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ChangeLog;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Stock;
@@ -18,7 +19,7 @@ class TestConstructor {
 	
 	@BeforeEach
 	void setup() {
-		this.stock = new Stock("gold", 2.0, Condition.PERFECT, new ArrayList<SpecialQuality>());
+		this.stock = new Stock("gold", 2.0, ItemCategory.OTHER, Condition.PERFECT, new ArrayList<SpecialQuality>());
 	}
 
 	@Test
