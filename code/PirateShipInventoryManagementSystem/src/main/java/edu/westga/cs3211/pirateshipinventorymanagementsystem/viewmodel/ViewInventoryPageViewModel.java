@@ -1,0 +1,66 @@
+package edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel;
+
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Authenticator;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ChangeHistory;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Compartment;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Inventory;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Stock;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+/**
+ * View Model for the View Inventory Page
+ * 
+ * @author Ryan Stubbs
+ * @version Fall 2025
+ */
+public class ViewInventoryPageViewModel {
+	private Inventory inventory;
+	@SuppressWarnings("unused")
+	private ChangeHistory history;
+	@SuppressWarnings("unused")
+	private String username;
+	@SuppressWarnings("unused")
+	private String password;
+	@SuppressWarnings("unused")
+	private Authenticator auth;
+	
+	/**
+	 * Instantiates a new ViewInventoryPageViewModel object with inventory, history, username, and password
+	 * 
+	 * @param inventory the inventory of the system
+	 * @param history the history log of the inventory
+	 * @param username	the username of the signed in user
+	 * @param password	the password of the signed in user
+	 */
+	public ViewInventoryPageViewModel(Inventory inventory, ChangeHistory history, String username, String password) {
+		this.inventory = inventory;
+		this.history = history;
+		this.username = username;
+		this.password = password;
+		this.auth = new Authenticator();
+	}
+	
+	/**
+	 * Returns an ObservableList of the compartments within the inventory.
+	 * 
+	 * @return an Observable List of Compartments in the inventory
+	 */
+	public ObservableList<Compartment> getCompartments() {
+		return FXCollections.observableArrayList(this.inventory.getCompartments());
+	}
+	
+	/**
+	 * Returns an ObservableList of the stock items within the compartment.
+	 * 
+	 * @param compartment the compartment to return the list of stock items from
+	 * @return ObservableList of the stock items within the given compartment.
+	 */
+	public ObservableList<Stock> getStock(Compartment compartment) {
+		if (compartment == null) {
+			return FXCollections.observableArrayList();
+		}
+		return FXCollections.observableArrayList(compartment.getItems());
+	}
+	
+}

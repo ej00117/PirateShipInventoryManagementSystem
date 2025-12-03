@@ -40,6 +40,9 @@ public class LandingPageCodeBehind {
     @FXML
     private Label yourRolesLabel;
     
+    @FXML
+    private Button viewInventoryButton;
+    
     private LandingPageViewModel viewModel;
     
     /**
@@ -98,6 +101,27 @@ public class LandingPageCodeBehind {
 			exc.printStackTrace();
 		}
     }
+    
+    @FXML
+    void onViewInventory(ActionEvent event) {
+    	try {
+    		URL fxmlLocation = getClass().getResource("/edu/westga/cs3211/pirateshipinventorymanagementsystem/view/viewinventorypage.fxml");
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
+            
+            ViewInventoryPageCodeBehind viewInventoryPageCodeBehind = new ViewInventoryPageCodeBehind(this.viewModel.getInventory(), this.viewModel.getHistory(), this.viewModel.getName(), this.viewModel.getPassword());
+            loader.setController(viewInventoryPageCodeBehind);
+            
+            AnchorPane viewInventoryPage = loader.load();
+            
+            Stage stage = new Stage();
+            stage.setTitle("View Inventory Page");
+            Scene scene = new Scene(viewInventoryPage);
+            stage.setScene(scene);
+            stage.showAndWait();
+    	} catch (Exception exc) {
+    		exc.printStackTrace();
+    	}
+    }
 
     @FXML
     void initialize() {
@@ -105,6 +129,7 @@ public class LandingPageCodeBehind {
         assert this.viewHistoryButton != null : "fx:id=\"viewHistoryButton\" was not injected: check your FXML file 'landingpage.fxml'.";
         assert this.yourNameLabel != null : "fx:id=\"yourNameLabel\" was not injected: check your FXML file 'landingpage.fxml'.";
         assert this.yourRolesLabel != null : "fx:id=\"yourRolesLabel\" was not injected: check your FXML file 'landingpage.fxml'.";
+        assert this.viewInventoryButton != null : "fx:id=\"viewInventoryButton\" was not injected: check your FXML file 'landingpage.fxml'.";
         this.bindComponentsToViewModel();
         this.viewModel.setLandingPageUserDetails();
         this.enableButtonsBasedOnRoles();
@@ -124,6 +149,9 @@ public class LandingPageCodeBehind {
     	}
     	if (this.viewModel.checkIfQuartermaster()) {
     		this.viewHistoryButton.setDisable(false);
+    	}
+    	if (!this.viewModel.checkIfQuartermaster()) {
+    		this.viewInventoryButton.setDisable(true);
     	}
     }
 
