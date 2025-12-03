@@ -91,7 +91,12 @@ public class Authenticator {
 		crewmateAndQuarterMaster.add(Role.CREWMATE);
 		crewmateAndQuarterMaster.add(Role.QUARTERMASTER);
 		
+		ArrayList<Role> crewmateAndCook = new ArrayList<Role>();
+		crewmateAndCook.add(Role.CREWMATE);
+		crewmateAndCook.add(Role.COOK);
+		
 		this.users.add(new User("bob", "pass1234", crewmateOnly));
 		this.users.add(new User("stanley", "secretpass", crewmateAndQuarterMaster));
+		this.users.add(new User("john", "cook1234", crewmateAndCook));
 	}
 }
