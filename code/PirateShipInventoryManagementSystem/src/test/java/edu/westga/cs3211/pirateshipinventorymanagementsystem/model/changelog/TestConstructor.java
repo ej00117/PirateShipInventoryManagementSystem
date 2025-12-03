@@ -1,7 +1,7 @@
 package edu.westga.cs3211.pirateshipinventorymanagementsystem.model.changelog;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.Assert.assertThrows;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;

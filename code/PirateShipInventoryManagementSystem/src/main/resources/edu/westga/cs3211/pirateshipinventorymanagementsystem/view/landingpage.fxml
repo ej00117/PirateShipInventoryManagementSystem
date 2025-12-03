@@ -39,5 +39,11 @@
       </Label>
       <Label layoutX="322.0" layoutY="263.0" text="Must be CREWMATE" />
       <Label layoutX="281.0" layoutY="479.0" text="Must be QUARTERMASTER" />
+      <Button fx:id="viewInventoryButton" layoutX="283.0" layoutY="433.0" mnemonicParsing="false" onAction="#onViewInventory" prefHeight="39.0" prefWidth="184.0" text="View Inventory">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Label layoutX="281.0" layoutY="416.0" text="Must have a role above CREWMATE" />
    </children>
 </AnchorPane>
