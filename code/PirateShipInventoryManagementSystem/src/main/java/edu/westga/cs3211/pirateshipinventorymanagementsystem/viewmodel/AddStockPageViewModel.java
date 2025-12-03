@@ -36,6 +36,7 @@ public class AddStockPageViewModel {
 	private BooleanProperty isLiquid;
 	private BooleanProperty isFlammable;
 	private ObjectProperty<Condition> selectedCondition;
+	private ObjectProperty<ItemCategory> selectedCategory;
 	private ArrayList<SpecialQuality> qualities;
 	private Stock stock;
 	private String user;
@@ -59,6 +60,7 @@ public class AddStockPageViewModel {
 		this.isLiquid = new SimpleBooleanProperty(false);
 		this.isFlammable = new SimpleBooleanProperty(false);
 		this.selectedCondition = new SimpleObjectProperty<>(Condition.PERFECT);
+		this.selectedCategory = new SimpleObjectProperty<>(ItemCategory.OTHER);
 		this.user = user;
 	}
 	
@@ -83,13 +85,13 @@ public class AddStockPageViewModel {
 	private void stageRegularStockForAdding() {
 		Double quantity = Double.parseDouble(this.quantity.get());
 		this.stock = new Stock(
-				this.name.get(), quantity, ItemCategory.OTHER, this.getSelectedCondition().get(), this.qualities);
+				this.name.get(), quantity, this.getSelectedCategory().get(), this.getSelectedCondition().get(), this.qualities);
 	}	
 	
 	private void stagePerishableStockForAdding() {
 		Double quantity = Double.parseDouble(this.quantity.get());
 		this.stock = new PerishableStock(
-				this.name.get(), quantity, ItemCategory.OTHER, this.getSelectedCondition().get(), this.qualities, 
+				this.name.get(), quantity, this.getSelectedCategory().get(), this.getSelectedCondition().get(), this.qualities, 
 				LocalDate.of(Integer.parseInt(this.year.get()), Integer.parseInt(this.month.get()), Integer.parseInt(this.day.get())));
 	}
 	
@@ -213,5 +215,14 @@ public class AddStockPageViewModel {
 	 */
 	public String getUser() {
 		return this.user;
+	}
+
+	/**
+	 * Returns the selectedCategory property
+	 * 
+	 * @return the selectedCategory property
+	 */
+	public ObjectProperty<ItemCategory> getSelectedCategory() {
+		return this.selectedCategory;
 	}
 }

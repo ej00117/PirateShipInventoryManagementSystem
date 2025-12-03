@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Condition;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.ItemCategory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ChangeHistory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Inventory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Stock;
@@ -49,6 +50,9 @@ public class AddStockPageCodeBehind {
 
 	@FXML
 	private CheckBox checkPerishable;
+	
+	@FXML
+    private ComboBox<ItemCategory> categoryComboBox;
 
 	@FXML
 	private ComboBox<Condition> conditionComboBox;
@@ -121,6 +125,7 @@ public class AddStockPageCodeBehind {
 		assert this.checkFlammable != null : "fx:id=\"checkFlammable\" was not injected: check your FXML file 'addstockpage.fxml'.";
 		assert this.checkLiquid != null : "fx:id=\"checkLiquid\" was not injected: check your FXML file 'addstockpage.fxml'.";
 		assert this.checkPerishable != null : "fx:id=\"checkPerishable\" was not injected: check your FXML file 'addstockpage.fxml'.";
+		assert this.categoryComboBox != null : "fx:id=\"categoryComboBox\" was not injected: check your FXML file 'addstockpage.fxml'.";
 		assert this.conditionComboBox != null : "fx:id=\"conditionComboBox\" was not injected: check your FXML file 'addstockpage.fxml'.";
 		assert this.dayTextField != null : "fx:id=\"dayTextField\" was not injected: check your FXML file 'addstockpage.fxml'.";
 		assert this.monthTextField != null : "fx:id=\"monthTextField\" was not injected: check your FXML file 'addstockpage.fxml'.";
@@ -129,13 +134,7 @@ public class AddStockPageCodeBehind {
 		assert this.submitButton != null : "fx:id=\"submitButton\" was not injected: check your FXML file 'addstockpage.fxml'.";
 		assert this.yearTextField != null : "fx:id=\"yearTextField\" was not injected: check your FXML file 'addstockpage.fxml'.";
 
-		ArrayList<Condition> conditions = new ArrayList<Condition>();
-		conditions.add(Condition.PERFECT);
-		conditions.add(Condition.USABLE);
-		conditions.add(Condition.UNUSABLE);
-		ObservableList<Condition> observableConditions = FXCollections.observableArrayList(conditions);
-		this.conditionComboBox.setItems(observableConditions);
-		this.conditionComboBox.setValue(observableConditions.get(0));
+		this.initializeComboBoxes();
 		this.bindComponentsToViewModel();
 
 		this.setExpirationDateFields(true);
@@ -150,6 +149,24 @@ public class AddStockPageCodeBehind {
 		this.submitButton.setDisable(true);
 		this.setUpTextFieldListeners();
 		this.setUpExpirationTextFieldListeners();
+	}
+	
+	private void initializeComboBoxes() {
+		ArrayList<Condition> conditions = new ArrayList<Condition>();
+		conditions.add(Condition.PERFECT);
+		conditions.add(Condition.USABLE);
+		conditions.add(Condition.UNUSABLE);
+		ObservableList<Condition> observableConditions = FXCollections.observableArrayList(conditions);
+		this.conditionComboBox.setItems(observableConditions);
+		this.conditionComboBox.setValue(observableConditions.get(0));
+		
+		ArrayList<ItemCategory> categories = new ArrayList<ItemCategory>();
+		categories.add(ItemCategory.OTHER);
+		categories.add(ItemCategory.FOOD);
+		categories.add(ItemCategory.MUNITIONS);
+		ObservableList<ItemCategory> observableCategories = FXCollections.observableArrayList(categories);
+		this.categoryComboBox.setItems(observableCategories);
+		this.categoryComboBox.setValue(observableCategories.get(0));
 	}
 
 	private void setUpTextFieldListeners() {
@@ -217,6 +234,12 @@ public class AddStockPageCodeBehind {
 		this.conditionComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null) {
 				this.viewModel.getSelectedCondition().set(newValue);
+			}
+		});
+		
+		this.categoryComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null) {
+				this.viewModel.getSelectedCategory().set(newValue);
 			}
 		});
 	}
