@@ -78,6 +78,21 @@ public class Compartment {
 		}
 		throw new IllegalArgumentException(STOCK_TOO_LARGE);
 	}
+	
+	/**
+	 * Removes a given stock from the list of stocks.
+	 * 
+	 * @param stock the stock to remove
+	 * @return true if removed
+	 */
+	public boolean removeStock(Stock stock) {
+		if (stock == null) {
+			throw new IllegalArgumentException(STOCK_CANNOT_BE_NULL);
+		} else {
+			this.items.remove(stock);
+			return true;
+		}
+	}
 
 	/**
 	 * Returns the capacity left in the compartment

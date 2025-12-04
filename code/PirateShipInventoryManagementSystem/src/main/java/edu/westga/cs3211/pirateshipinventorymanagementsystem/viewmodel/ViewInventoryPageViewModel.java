@@ -66,4 +66,22 @@ public class ViewInventoryPageViewModel {
 		return FXCollections.observableArrayList(compartment.getItems());
 	}
 	
+	/**
+	 * Removes a quantity of stock from a stock item within the given compartment.
+	 * 
+	 * @param stock the stock item remove quantity from
+	 * @param compartment the compartment that the stock item is held in
+	 * @param quantity the quantity of the stock item to remove
+	 */
+	public void removeStock(Stock stock, Compartment compartment, int quantity) {
+		if (quantity < 1 || quantity > 300) {
+			throw new IllegalArgumentException("Quantity Must Be Greater Than 0 and Less than 300!");
+		} else if (quantity > stock.getQuantity()) {
+			throw new IllegalArgumentException("Removal Quantity Must be Less than or Equal To Stock's Quantity");
+		} else if (stock.getQuantity() == quantity) {
+			compartment.removeStock(stock);
+		} else {
+			stock.setQuantity(stock.getQuantity() - quantity);
+		}
+	}
 }
