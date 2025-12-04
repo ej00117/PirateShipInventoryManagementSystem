@@ -81,6 +81,7 @@ public class ViewInventoryPageCodeBehind {
     		try {
     			quantity = Integer.parseInt(this.quantityTextField.getText());
     			this.viewModel.removeStock(this.compartmentListView.getSelectionModel().getSelectedItem(), this.inventoryListView.getSelectionModel().getSelectedItem(), quantity);
+    			this.refreshListViews();
     		} catch (NumberFormatException ex) {
     			Alert alert = new Alert(AlertType.INFORMATION);
         		alert.setTitle("Invalid Quantity Input");
@@ -127,5 +128,9 @@ public class ViewInventoryPageCodeBehind {
     		}
     	});
     	this.selectedCompartmentTextField.textProperty().bind(Bindings.createStringBinding(() -> String.valueOf(this.compartmentListView.getSelectionModel().getSelectedItem()), this.compartmentListView.getSelectionModel().selectedItemProperty()));
+    }
+    
+    private void refreshListViews() {
+    	this.inventoryListView.setItems(this.viewModel.getCompartments());
     }
 }
