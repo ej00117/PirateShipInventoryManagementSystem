@@ -150,7 +150,7 @@ public class LandingPageCodeBehind {
     	if (this.viewModel.checkIfQuartermaster()) {
     		this.viewHistoryButton.setDisable(false);
     	}
-    	if (!this.viewModel.checkIfQuartermaster()) {
+    	if (!this.viewModel.checkIfQuartermaster() && !this.viewModel.checkIfCook()) {
     		this.viewInventoryButton.setDisable(true);
     	}
     }

@@ -1,5 +1,7 @@
 package edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel;
 
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.ItemCategory;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Role;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Authenticator;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ChangeHistory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Compartment;
@@ -18,11 +20,8 @@ public class ViewInventoryPageViewModel {
 	private Inventory inventory;
 	@SuppressWarnings("unused")
 	private ChangeHistory history;
-	@SuppressWarnings("unused")
 	private String username;
-	@SuppressWarnings("unused")
 	private String password;
-	@SuppressWarnings("unused")
 	private Authenticator auth;
 	
 	/**
@@ -59,6 +58,10 @@ public class ViewInventoryPageViewModel {
 	public ObservableList<Stock> getStock(Compartment compartment) {
 		if (compartment == null) {
 			return FXCollections.observableArrayList();
+		} else if (this.auth.getRolesForUser(this.username, this.password).contains(Role.QUARTERMASTER)) {
+			return FXCollections.observableArrayList(compartment.getItems());
+		} else if (this.auth.getRolesForUser(this.username, this.password).contains(Role.COOK)) {
+			return FXCollections.observableArrayList(compartment.getItems().stream().filter(stock -> stock.getCategory() == ItemCategory.FOOD).toList());
 		}
 		return FXCollections.observableArrayList(compartment.getItems());
 	}

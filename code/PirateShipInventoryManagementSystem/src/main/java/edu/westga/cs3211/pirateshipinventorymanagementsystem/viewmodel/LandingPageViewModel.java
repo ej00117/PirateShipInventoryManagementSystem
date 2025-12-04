@@ -121,6 +121,18 @@ public class LandingPageViewModel {
 	}
 	
 	/**
+	 * Returns true if user is a cook
+	 * 
+	 * @return true if user is cook
+	 */
+	public boolean checkIfCook() {
+		if (this.authenticator.getRolesForUser(this.name, this.password).contains(Role.COOK)) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * Ensure that user can add stock
 	 * 
 	 * @return true if user can add stock, false if not

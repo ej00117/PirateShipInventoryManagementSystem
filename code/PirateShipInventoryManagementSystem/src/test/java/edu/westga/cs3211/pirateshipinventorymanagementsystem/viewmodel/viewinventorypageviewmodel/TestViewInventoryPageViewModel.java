@@ -46,5 +46,32 @@ class TestViewInventoryPageViewModel {
 				() -> assertEquals(vm.getStock(null), FXCollections.observableArrayList(), "Compartment without items should return empty list.")
 				);
 	}
+	
+	@Test
+	void testViewInventoryGetStockCookFiltering() {
+		ArrayList<Compartment> compartments = new ArrayList<>();
+
+        ArrayList<SpecialQuality> qualities1 = new ArrayList<>();
+        qualities1.add(SpecialQuality.FLAMMABLE);
+        Compartment compartment = new Compartment("compartment1", 100.0, qualities1);
+        Stock stock = new Stock("mercury", 2.0, ItemCategory.OTHER, Condition.PERFECT, qualities1);
+        Stock stock2 = new Stock("Flammable Apples", 2.0, ItemCategory.FOOD, Condition.PERFECT, qualities1);
+        compartment.addStock(stock);
+        compartment.addStock(stock2);
+        compartments.add(compartment);
+
+        ArrayList<SpecialQuality> qualities2 = new ArrayList<>();
+        qualities2.add(SpecialQuality.PERISHABLE);
+        compartments.add(new Compartment("compartment2", 50.0, qualities2));
+
+        ArrayList<SpecialQuality> qualities3 = new ArrayList<>();
+        qualities3.add(SpecialQuality.LIQUID);
+        compartments.add(new Compartment("compartment3", 30.0, qualities3));
+
+        Inventory inventory = new Inventory(compartments);
+        ChangeHistory history = new ChangeHistory();
+		ViewInventoryPageViewModel vm = new ViewInventoryPageViewModel(inventory, history, "john", "cook1234");
+		assertEquals(vm.getStock(compartment).size(), 1, "Get Stock as a Cook Should only Return Food Items.");
+	}
 
 }

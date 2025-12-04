@@ -62,6 +62,18 @@ class TestLandingPageViewModel {
         viewModel = new LandingPageViewModel(authenticator, "stanley", "secretpass");
         assertTrue(viewModel.checkIfQuartermaster());
     }
+    
+    @Test
+    void testCheckIfCookTrue() {
+    	viewModel = new LandingPageViewModel(authenticator, "john", "cook1234");
+    	assertTrue(viewModel.checkIfCook());
+    }
+    
+    @Test
+    void testCheckIfCookFalse() {
+    	viewModel = new LandingPageViewModel(authenticator, "bob", "pass1234");
+    	assertFalse(viewModel.checkIfCook());
+    }
 
     @Test
     void testCheckIfQuartermasterFalse() {

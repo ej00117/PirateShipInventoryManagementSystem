@@ -11,3 +11,7 @@ pass1234
 QUARTERMASTER
 stanley
 secretpass
+
+COOK
+john
+cook1234
