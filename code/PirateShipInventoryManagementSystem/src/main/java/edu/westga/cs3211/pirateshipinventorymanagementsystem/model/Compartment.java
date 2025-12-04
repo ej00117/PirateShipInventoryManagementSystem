@@ -102,6 +102,15 @@ public class Compartment {
 	public Double getFreeSpace() {
 		return this.capacity;
 	}
+	
+	/**
+	 * Sets the capacity of the compartment
+	 * 
+	 * @param capacity the capacity of the compartment
+	 */
+	public void setFreeSpace(Double capacity) {
+		this.capacity = capacity;
+	}
 
 	/**
 	 * Returns the type of the compartment

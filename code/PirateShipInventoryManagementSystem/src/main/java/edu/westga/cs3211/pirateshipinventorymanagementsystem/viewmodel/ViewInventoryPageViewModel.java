@@ -62,8 +62,9 @@ public class ViewInventoryPageViewModel {
 			return FXCollections.observableArrayList(compartment.getItems());
 		} else if (this.auth.getRolesForUser(this.username, this.password).contains(Role.COOK)) {
 			return FXCollections.observableArrayList(compartment.getItems().stream().filter(stock -> stock.getCategory() == ItemCategory.FOOD).toList());
+		} else {
+			return FXCollections.observableArrayList(compartment.getItems().stream().filter(stock -> stock.getCategory() == ItemCategory.MUNITIONS).toList());
 		}
-		return FXCollections.observableArrayList(compartment.getItems());
 	}
 	
 	/**
@@ -80,8 +81,10 @@ public class ViewInventoryPageViewModel {
 			throw new IllegalArgumentException("Removal Quantity Must be Less than or Equal To Stock's Quantity");
 		} else if (stock.getQuantity() == quantity) {
 			compartment.removeStock(stock);
+			compartment.setFreeSpace(compartment.getFreeSpace() + quantity);
 		} else {
 			stock.setQuantity(stock.getQuantity() - quantity);
+			compartment.setFreeSpace(compartment.getFreeSpace() + quantity);
 		}
 	}
 }

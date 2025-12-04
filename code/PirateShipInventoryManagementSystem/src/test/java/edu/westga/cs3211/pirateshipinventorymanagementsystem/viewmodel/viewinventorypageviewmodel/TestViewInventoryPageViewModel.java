@@ -102,5 +102,32 @@ class TestViewInventoryPageViewModel {
 					})
 				);
 	}
+	
+	@Test
+	void testViewInventoryGetStockOfficerFiltering() {
+		ArrayList<Compartment> compartments = new ArrayList<>();
+
+        ArrayList<SpecialQuality> qualities1 = new ArrayList<>();
+        qualities1.add(SpecialQuality.FLAMMABLE);
+        Compartment compartment = new Compartment("compartment1", 100.0, qualities1);
+        Stock stock = new Stock("mercury", 2.0, ItemCategory.OTHER, Condition.PERFECT, qualities1);
+        Stock stock2 = new Stock("bullets", 2.0, ItemCategory.MUNITIONS, Condition.PERFECT, qualities1);
+        compartment.addStock(stock);
+        compartment.addStock(stock2);
+        compartments.add(compartment);
+
+        ArrayList<SpecialQuality> qualities2 = new ArrayList<>();
+        qualities2.add(SpecialQuality.PERISHABLE);
+        compartments.add(new Compartment("compartment2", 50.0, qualities2));
+
+        ArrayList<SpecialQuality> qualities3 = new ArrayList<>();
+        qualities3.add(SpecialQuality.LIQUID);
+        compartments.add(new Compartment("compartment3", 30.0, qualities3));
+
+        Inventory inventory = new Inventory(compartments);
+        ChangeHistory history = new ChangeHistory();
+		ViewInventoryPageViewModel vm = new ViewInventoryPageViewModel(inventory, history, "bill", "officer123");
+		assertEquals(vm.getStock(compartment).size(), 1, "Get Stock as a Officer Should only Return Munition Items.");
+	}
 
 }
