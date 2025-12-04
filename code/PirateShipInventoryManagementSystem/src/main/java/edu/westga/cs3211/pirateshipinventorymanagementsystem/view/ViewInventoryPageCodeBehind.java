@@ -11,9 +11,13 @@ import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Stock;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel.ViewInventoryPageViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 
 /**
@@ -42,6 +46,12 @@ public class ViewInventoryPageCodeBehind {
     @FXML
     private Text viewStockUserLabel;
     
+    @FXML
+    private TextField quantityTextField;
+
+    @FXML
+    private Button removeStockButton;
+    
     private ViewInventoryPageViewModel viewModel;
     
     private Authenticator auth = new Authenticator();
@@ -63,6 +73,36 @@ public class ViewInventoryPageCodeBehind {
     	this.username = username;
     	this.password = password;
     }
+    
+    @FXML
+    void onRemoveStock(ActionEvent event) {
+    	if (this.compartmentListView.getSelectionModel().getSelectedItem() != null) {
+    		int quantity;
+    		try {
+    			quantity = Integer.parseInt(this.quantityTextField.getText());
+    			this.viewModel.removeStock(this.compartmentListView.getSelectionModel().getSelectedItem(), this.inventoryListView.getSelectionModel().getSelectedItem(), quantity);
+    		} catch (NumberFormatException ex) {
+    			Alert alert = new Alert(AlertType.INFORMATION);
+        		alert.setTitle("Invalid Quantity Input");
+        		alert.setHeaderText("Invalid Quantity");
+        		alert.setContentText("Quantity must be a whole number!");
+        		alert.showAndWait();
+    		} catch (Exception ex) {
+    			Alert alert = new Alert(AlertType.INFORMATION);
+        		alert.setTitle("Invalid Quantity Input");
+        		alert.setHeaderText("Invalid Quantity");
+        		alert.setContentText(ex.getMessage());
+        		alert.showAndWait();
+    		}
+    		
+    	} else {
+    		Alert alert = new Alert(AlertType.INFORMATION);
+    		alert.setTitle("Cannot Remove Stock");
+    		alert.setHeaderText("No Stock Item Chosen");
+    		alert.setContentText("Please select a stock item to remove and try again.");
+    		alert.showAndWait();
+    	}
+    }
 
     @FXML
     void initialize() {
@@ -70,6 +110,8 @@ public class ViewInventoryPageCodeBehind {
         assert this.selectedCompartmentTextField != null : "fx:id=\"selectedCompartmentTextField\" was not injected: check your FXML file 'viewinventorypage.fxml'.";
         assert this.viewStockUserLabel != null : "fx:id=\"viewStockUserLabel\" was not injected: check your FXML file 'viewinventorypage.fxml'.";
         assert this.viewStockUserLabel != null : "fx:id=\"viewStockUserLabel\" was not injected: check your FXML file 'viewinventorypage.fxml'.";
+        assert this.quantityTextField != null : "fx:id=\"quantityTextField\" was not injected: check your FXML file 'viewinventorypage.fxml'.";
+        assert this.removeStockButton != null : "fx:id=\"removeStockButton\" was not injected: check your FXML file 'viewinventorypage.fxml'.";
         this.viewStockUserLabel.setText(this.viewStockUserLabel.getText() + this.auth.getRolesForUser(this.username, this.password).toString());
         this.setupInventoryPageBindings();
     }

@@ -111,6 +111,15 @@ public class Stock {
 	}
 	
 	/**
+	 * Sets the quantity of the stock
+	 * 
+	 * @param quantity the quantity for the stock to be set to
+	 */
+	public void setQuantity(double quantity) {
+		this.quantity = quantity;
+	}
+	
+	/**
 	 * Returns the stock's special qualities
 	 * 
 	 * @return the stock's special qualities
