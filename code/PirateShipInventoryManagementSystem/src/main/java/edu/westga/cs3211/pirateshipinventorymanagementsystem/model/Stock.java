@@ -1,5 +1,6 @@
 package edu.westga.cs3211.pirateshipinventorymanagementsystem.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Condition;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.ItemCategory;
@@ -127,6 +128,15 @@ public class Stock {
 	public ArrayList<SpecialQuality> getSpecialQualities() {
 		return this.specialQualities;
 	}
+	
+	/**
+	 * Returns the expiration date of the perishable stock
+	 * 
+	 * @return expiration date of the perishable stock
+	 */
+	public LocalDate getExpirationDate() {
+        return null;
+    }
 	
 	/**
 	 * To string for stock items
