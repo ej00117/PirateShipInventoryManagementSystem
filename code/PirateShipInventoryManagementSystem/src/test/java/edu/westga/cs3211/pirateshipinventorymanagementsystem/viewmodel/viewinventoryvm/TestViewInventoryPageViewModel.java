@@ -1,4 +1,4 @@
-package edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel.viewinventorypageviewmodel;
+package edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel.viewinventoryvm;
 
 import static org.junit.jupiter.api.Assertions.*;
 

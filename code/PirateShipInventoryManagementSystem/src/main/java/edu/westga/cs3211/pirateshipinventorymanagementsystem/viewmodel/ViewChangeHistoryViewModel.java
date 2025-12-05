@@ -149,9 +149,9 @@ public class ViewChangeHistoryViewModel {
         for (ChangeLog log : this.allLogs) {
             if (log.getStockInfo().getSpecialQualities().contains(SpecialQuality.PERISHABLE)) {
                 LocalDate expiration = log.getStockInfo().getExpirationDate();
-                if (expiration != null && 
-                        (expiration.isEqual(start) || expiration.isAfter(start)) &&
-                        (expiration.isEqual(end) || expiration.isBefore(end))) {
+                if (expiration != null 
+                		&& (expiration.isEqual(start) || expiration.isAfter(start))
+                		&& (expiration.isEqual(end) || expiration.isBefore(end))) {
                     results.add(log);
                 }
             }
@@ -161,6 +161,8 @@ public class ViewChangeHistoryViewModel {
     }
 
     /**
+     * Returns an observable list of the logs.
+     * 
      * @return the logs list
      */
     public ObservableList<ChangeLog> getLogs() {
@@ -168,6 +170,8 @@ public class ViewChangeHistoryViewModel {
     }
 
     /**
+     * Returns the history log
+     * 
      * @return the history
      */
     public ChangeHistory getHistory() {
@@ -175,6 +179,8 @@ public class ViewChangeHistoryViewModel {
     }
 
     /**
+     * Returns isPerishable property
+     * 
      * @return the isPerishable property
      */
     public BooleanProperty getIsPerishable() {
@@ -182,6 +188,8 @@ public class ViewChangeHistoryViewModel {
     }
 
     /**
+     * Returns the isLiquid property
+     * 
      * @return the isLiquid property
      */
     public BooleanProperty getIsLiquid() {
@@ -189,6 +197,8 @@ public class ViewChangeHistoryViewModel {
     }
 
     /**
+     * Returns isFlammable property 
+     * 
      * @return the isFlammable property
      */
     public BooleanProperty getIsFlammable() {
@@ -196,6 +206,8 @@ public class ViewChangeHistoryViewModel {
     }
 
     /**
+     * Returns the selected user
+     * 
      * @return the selected user property
      */
     public ObjectProperty<String> getSelectedUser() {
@@ -203,6 +215,8 @@ public class ViewChangeHistoryViewModel {
     }
 
     /**
+     * Returns a list of users
+     * 
      * @return list of users
      */
     public ArrayList<String> getUsers() {
@@ -210,6 +224,8 @@ public class ViewChangeHistoryViewModel {
     }
 
     /**
+     * Returns the chosen start expiration date.
+     * 
      * @return start expiration date property
      */
     public ObjectProperty<LocalDate> getStartExpirationDate() {
@@ -217,6 +233,8 @@ public class ViewChangeHistoryViewModel {
     }
 
     /**
+     * Returns the chosen end expiration date. 
+     * 
      * @return end expiration date property
      */
     public ObjectProperty<LocalDate> getEndExpirationDate() {
