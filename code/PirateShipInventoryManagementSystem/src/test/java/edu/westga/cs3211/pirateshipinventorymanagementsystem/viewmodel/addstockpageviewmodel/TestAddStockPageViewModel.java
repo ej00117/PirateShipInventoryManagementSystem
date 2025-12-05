@@ -71,9 +71,7 @@ class TestAddStockPageViewModel {
         this.viewModel.getIsPerishable().set(true);
         this.viewModel.getIsLiquid().set(false);
         this.viewModel.getIsFlammable().set(false);
-        this.viewModel.getYear().set("2025");
-        this.viewModel.getMonth().set("11");
-        this.viewModel.getDay().set("15");
+        this.viewModel.getExpirationDate().set(LocalDate.of(2025, 11, 15));
 
         Stock stock = this.viewModel.prepareStockForInventory();
 
@@ -125,8 +123,6 @@ class TestAddStockPageViewModel {
 
         assertEquals("Stock unable to be added, quantity is too large for remaining capacity.", thrown.getMessage());
     }
-    
-    
 
     @Test
     void testGetName() {
@@ -139,18 +135,8 @@ class TestAddStockPageViewModel {
     }
 
     @Test
-    void testGetYear() {
-        assertNotNull(this.viewModel.getYear());
-    }
-
-    @Test
-    void testGetMonth() {
-        assertNotNull(this.viewModel.getMonth());
-    }
-
-    @Test
-    void testGetDay() {
-        assertNotNull(this.viewModel.getDay());
+    void testGetExpirationDate() {
+        assertNotNull(this.viewModel.getExpirationDate());
     }
 
     @Test

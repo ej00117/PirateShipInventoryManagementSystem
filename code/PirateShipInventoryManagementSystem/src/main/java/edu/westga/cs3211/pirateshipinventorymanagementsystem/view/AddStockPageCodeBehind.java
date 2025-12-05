@@ -13,13 +13,13 @@ import edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel.AddStockP
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
@@ -33,49 +33,43 @@ import javafx.stage.Stage;
  */
 public class AddStockPageCodeBehind {
 
-	@FXML
-	private ResourceBundle resources;
+    @FXML
+    private ResourceBundle resources;
 
-	@FXML
-	private URL location;
+    @FXML
+    private URL location;
 
-	@FXML
-	private Button cancelButton;
+    @FXML
+    private Button cancelButton;
 
-	@FXML
-	private CheckBox checkFlammable;
+    @FXML
+    private CheckBox checkFlammable;
 
-	@FXML
-	private CheckBox checkLiquid;
+    @FXML
+    private CheckBox checkLiquid;
 
-	@FXML
-	private CheckBox checkPerishable;
-	
-	@FXML
+    @FXML
+    private CheckBox checkPerishable;
+
+    @FXML
     private ComboBox<ItemCategory> categoryComboBox;
 
-	@FXML
-	private ComboBox<Condition> conditionComboBox;
+    @FXML
+    private ComboBox<Condition> conditionComboBox;
 
-	@FXML
-	private TextField dayTextField;
+    @FXML
+    private TextField nameTextField;
 
-	@FXML
-	private TextField monthTextField;
+    @FXML
+    private TextField quantityTextField;
 
-	@FXML
-	private TextField nameTextField;
+    @FXML
+    private DatePicker expirationDatePicker;
 
-	@FXML
-	private TextField quantityTextField;
+    @FXML
+    private Button submitButton;
 
-	@FXML
-	private Button submitButton;
-
-	@FXML
-	private TextField yearTextField;
-
-	private AddStockPageViewModel viewModel;
+    private AddStockPageViewModel viewModel;
 
 	/**
 	 * Instantiates a new add stock page view model
@@ -88,160 +82,117 @@ public class AddStockPageCodeBehind {
 		this.viewModel = new AddStockPageViewModel(inventory, history, user);
 	}
 
-	@FXML
-	void onCancel(ActionEvent event) {
-		Stage stage = (Stage) this.submitButton.getScene().getWindow();
-		stage.close();
-	}
+    @FXML
+    void onCancel(ActionEvent event) {
+        Stage stage = (Stage) this.submitButton.getScene().getWindow();
+        stage.close();
+    }
 
-	@FXML
-	void onSubmit(ActionEvent event) {
-		try {
-			URL fxmlLocation = getClass().getResource("/edu/westga/cs3211/pirateshipinventorymanagementsystem/view/addstocklistpage.fxml");
-			FXMLLoader loader = new FXMLLoader(fxmlLocation);
-			Stock stockToAdd = this.viewModel.prepareStockForInventory();
-			AddStockListPageCodeBehind addStockListPageCodeBehind = new AddStockListPageCodeBehind(
-					this.viewModel.getInventory().getCompartmentsAtType(stockToAdd.getSpecialQualities(), stockToAdd.getQuantity()),
-					this.viewModel.getHistory(), stockToAdd, this.viewModel.getUser());
-			loader.setController(addStockListPageCodeBehind);
+    @FXML
+    void onSubmit(ActionEvent event) {
+        try {
+            URL fxmlLocation = getClass().getResource(
+                "/edu/westga/cs3211/pirateshipinventorymanagementsystem/view/addstocklistpage.fxml"
+            );
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
 
-			AnchorPane addStockListPage = loader.load();
+            Stock stockToAdd = this.viewModel.prepareStockForInventory();
 
-			Stage newStage = new Stage();
-			newStage.setTitle("AddStockListCompartmentsPage");
-			Scene scene = new Scene(addStockListPage);
-			newStage.setScene(scene);
-			newStage.show();
-		} catch (Exception exc) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setContentText(exc.getMessage());
-			alert.showAndWait();
-		}
-	}
+            AddStockListPageCodeBehind controller = new AddStockListPageCodeBehind(
+                this.viewModel.getInventory().getCompartmentsAtType(
+                    stockToAdd.getSpecialQualities(),
+                    stockToAdd.getQuantity()
+                ),
+                this.viewModel.getHistory(),
+                stockToAdd,
+                this.viewModel.getUser()
+            );
 
-	@FXML
-	void initialize() {
-		assert this.cancelButton != null : "fx:id=\"cancelButton\" was not injected: check your FXML file 'addstockpage.fxml'.";
-		assert this.checkFlammable != null : "fx:id=\"checkFlammable\" was not injected: check your FXML file 'addstockpage.fxml'.";
-		assert this.checkLiquid != null : "fx:id=\"checkLiquid\" was not injected: check your FXML file 'addstockpage.fxml'.";
-		assert this.checkPerishable != null : "fx:id=\"checkPerishable\" was not injected: check your FXML file 'addstockpage.fxml'.";
-		assert this.categoryComboBox != null : "fx:id=\"categoryComboBox\" was not injected: check your FXML file 'addstockpage.fxml'.";
-		assert this.conditionComboBox != null : "fx:id=\"conditionComboBox\" was not injected: check your FXML file 'addstockpage.fxml'.";
-		assert this.dayTextField != null : "fx:id=\"dayTextField\" was not injected: check your FXML file 'addstockpage.fxml'.";
-		assert this.monthTextField != null : "fx:id=\"monthTextField\" was not injected: check your FXML file 'addstockpage.fxml'.";
-		assert this.nameTextField != null : "fx:id=\"nameTextField\" was not injected: check your FXML file 'addstockpage.fxml'.";
-		assert this.quantityTextField != null : "fx:id=\"quantityTextField\" was not injected: check your FXML file 'addstockpage.fxml'.";
-		assert this.submitButton != null : "fx:id=\"submitButton\" was not injected: check your FXML file 'addstockpage.fxml'.";
-		assert this.yearTextField != null : "fx:id=\"yearTextField\" was not injected: check your FXML file 'addstockpage.fxml'.";
+            loader.setController(controller);
+            AnchorPane page = loader.load();
 
-		this.initializeComboBoxes();
-		this.bindComponentsToViewModel();
+            Stage newStage = new Stage();
+            newStage.setTitle("Select Compartment");
+            newStage.setScene(new Scene(page));
+            newStage.show();
+        } catch (Exception exc) {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setContentText(exc.getMessage());
+            alert.showAndWait();
+        }
+    }
 
-		this.setExpirationDateFields(true);
-		this.checkPerishable.selectedProperty().addListener((observable, oldValue, newValue) -> {
-			if (newValue) {
-				this.setExpirationDateFields(false);
-			} else {
-				this.setExpirationDateFields(true);
-			}
-		});
+    @FXML
+    void initialize() {
+        this.initializeComboBoxes();
+        this.bindComponentsToViewModel();
+        this.expirationDatePicker.setDisable(true);
 
-		this.submitButton.setDisable(true);
-		this.setUpTextFieldListeners();
-		this.setUpExpirationTextFieldListeners();
-	}
-	
-	private void initializeComboBoxes() {
-		ArrayList<Condition> conditions = new ArrayList<Condition>();
-		conditions.add(Condition.PERFECT);
-		conditions.add(Condition.USABLE);
-		conditions.add(Condition.UNUSABLE);
-		ObservableList<Condition> observableConditions = FXCollections.observableArrayList(conditions);
-		this.conditionComboBox.setItems(observableConditions);
-		this.conditionComboBox.setValue(observableConditions.get(0));
-		
-		ArrayList<ItemCategory> categories = new ArrayList<ItemCategory>();
-		categories.add(ItemCategory.OTHER);
-		categories.add(ItemCategory.FOOD);
-		categories.add(ItemCategory.MUNITIONS);
-		ObservableList<ItemCategory> observableCategories = FXCollections.observableArrayList(categories);
-		this.categoryComboBox.setItems(observableCategories);
-		this.categoryComboBox.setValue(observableCategories.get(0));
-	}
+        this.checkPerishable.selectedProperty().addListener((obs, oldV, newV) -> {
+            this.expirationDatePicker.setDisable(!newV);
+            this.updateSubmitButtonState();
+        });
 
-	private void setUpTextFieldListeners() {
-		this.nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			this.updateSubmitButtonState();
-		});
+        this.nameTextField.textProperty().addListener((obs, o, n) -> this.updateSubmitButtonState());
+        this.quantityTextField.textProperty().addListener((obs, o, n) -> this.updateSubmitButtonState());
+        this.expirationDatePicker.valueProperty().addListener((obs, o, n) -> this.updateSubmitButtonState());
 
-		this.quantityTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			this.updateSubmitButtonState();
-		});
-	}
+        this.submitButton.setDisable(true);
+    }
 
-	private void setUpExpirationTextFieldListeners() {
-		this.yearTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			this.updateSubmitButtonState();
-		});
+    private void initializeComboBoxes() {
+        ArrayList<Condition> conditions = new ArrayList<>();
+        conditions.add(Condition.PERFECT);
+        conditions.add(Condition.USABLE);
+        conditions.add(Condition.UNUSABLE);
+        this.conditionComboBox.setItems(FXCollections.observableArrayList(conditions));
+        this.conditionComboBox.setValue(Condition.PERFECT);
 
-		this.monthTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			this.updateSubmitButtonState();
-		});
-		this.dayTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			this.updateSubmitButtonState();
-		});
-		
-		this.checkPerishable.selectedProperty().addListener((observable, oldValue, newValue) -> {
-		    this.setExpirationDateFields(!newValue); 
-		    this.updateSubmitButtonState();
-		});
-	}
+        ArrayList<ItemCategory> categories = new ArrayList<>();
+        categories.add(ItemCategory.OTHER);
+        categories.add(ItemCategory.FOOD);
+        categories.add(ItemCategory.MUNITIONS);
+        this.categoryComboBox.setItems(FXCollections.observableArrayList(categories));
+        this.categoryComboBox.setValue(ItemCategory.OTHER);
+    }
 
-	private void updateSubmitButtonState() {
-		if (!this.nameTextField.getText().isBlank() && !this.quantityTextField.getText().isBlank()) {
-			this.submitButton.setDisable(false);
-		} else {
-			this.submitButton.setDisable(true);
-		}
+    private void updateSubmitButtonState() {
+        boolean validBase = !this.nameTextField.getText().isBlank()
+                && !this.quantityTextField.getText().isBlank();
 
-		if (this.checkPerishable.isSelected()) {
-			if (!this.yearTextField.getText().isBlank() 
-					&& !this.monthTextField.getText().isBlank() 
-					&& !this.dayTextField.getText().isBlank()) {
-				this.submitButton.setDisable(false);
-			} else {
-				this.submitButton.setDisable(true);
-			}
-		}
-	}
+        if (!validBase) {
+            this.submitButton.setDisable(true);
+            return;
+        }
 
-	private void setExpirationDateFields(boolean bool) {
-		this.dayTextField.setDisable(bool);
-		this.monthTextField.setDisable(bool);
-		this.yearTextField.setDisable(bool);
-	}
+        if (this.checkPerishable.isSelected()) {
+            boolean hasDate = this.expirationDatePicker.getValue() != null;
+            this.submitButton.setDisable(!hasDate);
+            return;
+        }
 
-	private void bindComponentsToViewModel() {
-		this.nameTextField.textProperty().bindBidirectional(this.viewModel.getName());
-		this.quantityTextField.textProperty().bindBidirectional(this.viewModel.getQuantity());
-		this.yearTextField.textProperty().bindBidirectional(this.viewModel.getYear());
-		this.monthTextField.textProperty().bindBidirectional(this.viewModel.getMonth());
-		this.dayTextField.textProperty().bindBidirectional(this.viewModel.getDay());
-		this.checkPerishable.selectedProperty().bindBidirectional(this.viewModel.getIsPerishable());
-		this.checkLiquid.selectedProperty().bindBidirectional(this.viewModel.getIsLiquid());
-		this.checkFlammable.selectedProperty().bindBidirectional(this.viewModel.getIsFlammable());
+        this.submitButton.setDisable(false);
+    }
 
-		this.conditionComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-			if (newValue != null) {
-				this.viewModel.getSelectedCondition().set(newValue);
-			}
-		});
-		
-		this.categoryComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-			if (newValue != null) {
-				this.viewModel.getSelectedCategory().set(newValue);
-			}
-		});
-	}
+    private void bindComponentsToViewModel() {
+        this.nameTextField.textProperty().bindBidirectional(this.viewModel.getName());
+        this.quantityTextField.textProperty().bindBidirectional(this.viewModel.getQuantity());
+        this.expirationDatePicker.valueProperty().bindBidirectional(this.viewModel.getExpirationDate());
 
+        this.checkPerishable.selectedProperty().bindBidirectional(this.viewModel.getIsPerishable());
+        this.checkLiquid.selectedProperty().bindBidirectional(this.viewModel.getIsLiquid());
+        this.checkFlammable.selectedProperty().bindBidirectional(this.viewModel.getIsFlammable());
+
+        this.conditionComboBox.valueProperty().addListener((obs, oldV, newV) -> {
+            if (newV != null) {
+                this.viewModel.getSelectedCondition().set(newV);
+            }
+        });
+
+        this.categoryComboBox.valueProperty().addListener((obs, oldV, newV) -> {
+            if (newV != null) {
+                this.viewModel.getSelectedCategory().set(newV);
+            }
+        });
+    }
 }
