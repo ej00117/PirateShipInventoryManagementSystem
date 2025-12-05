@@ -12,6 +12,8 @@ import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.ItemCategory;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;
@@ -75,8 +77,6 @@ public class TestViewChangeHistory {
         this.viewModel.sortListBasedOnUser();
         assertEquals(1, this.viewModel.getLogs().size());
         assertTrue(this.viewModel.getLogs().contains(log1));
-
-        
     }
 
 
@@ -100,4 +100,139 @@ public class TestViewChangeHistory {
         assertNotNull(this.viewModel.getSelectedUser());
         assertNotNull(this.viewModel.getUsers());
     }
+    
+    @Test
+    void testFilterByExpirationDateRange_Matching() {
+        LocalDate today = LocalDateTime.now().toLocalDate();
+
+        this.viewModel.getStartExpirationDate().set(today.minusDays(1));
+        this.viewModel.getEndExpirationDate().set(today.plusDays(1));
+
+        this.viewModel.filterByExpirationDateRange();
+
+        assertEquals(1, this.viewModel.getLogs().size());
+        assertTrue(this.viewModel.getLogs().contains(log3));
+    }
+
+    @Test
+    void testFilterByExpirationDateRange_NoMatches() {
+        LocalDate today = LocalDateTime.now().toLocalDate();
+
+        this.viewModel.getStartExpirationDate().set(today.minusDays(10));
+        this.viewModel.getEndExpirationDate().set(today.minusDays(5));
+
+        this.viewModel.filterByExpirationDateRange();
+
+        assertEquals(0, this.viewModel.getLogs().size());
+    }
+
+    @Test
+    void testFilterByExpirationDateRange_RegularStockIgnored() {
+        LocalDate today = LocalDateTime.now().toLocalDate();
+
+        this.viewModel.getStartExpirationDate().set(today.minusDays(5));
+        this.viewModel.getEndExpirationDate().set(today.plusDays(5));
+
+        this.viewModel.filterByExpirationDateRange();
+
+        assertEquals(1, this.viewModel.getLogs().size());
+        assertTrue(this.viewModel.getLogs().contains(log3));
+        assertFalse(this.viewModel.getLogs().contains(log1));
+        assertFalse(this.viewModel.getLogs().contains(log2));
+    }
+
+    @Test
+    void testFilterByExpirationDateRange_NoStartDate_NoFiltering() {
+        this.viewModel.getStartExpirationDate().set(null);
+        this.viewModel.getEndExpirationDate().set(LocalDate.now());
+
+        this.viewModel.filterByExpirationDateRange();
+
+        assertEquals(3, this.viewModel.getLogs().size());
+    }
+
+    @Test
+    void testFilterByExpirationDateRange_NoEndDate_NoFiltering() {
+        this.viewModel.getStartExpirationDate().set(LocalDate.now());
+        this.viewModel.getEndExpirationDate().set(null);
+
+        this.viewModel.filterByExpirationDateRange();
+
+        assertEquals(3, this.viewModel.getLogs().size());
+    }
+    
+    @Test
+    void testSortListBasedOnUser_SingleUser() {
+        this.viewModel.getSelectedUser().set("user1");
+
+        this.viewModel.sortListBasedOnUser();
+
+        assertEquals(1, this.viewModel.getLogs().size());
+        assertTrue(this.viewModel.getLogs().contains(log1));
+        assertFalse(this.viewModel.getLogs().contains(log2));
+        assertFalse(this.viewModel.getLogs().contains(log3));
+    }
+
+    @Test
+    void testSortListBasedOnUser_AnotherUser() {
+        this.viewModel.getSelectedUser().set("user2");
+
+        this.viewModel.sortListBasedOnUser();
+
+        assertEquals(1, this.viewModel.getLogs().size());
+        assertTrue(this.viewModel.getLogs().contains(log2));
+        assertFalse(this.viewModel.getLogs().contains(log1));
+        assertFalse(this.viewModel.getLogs().contains(log3));
+    }
+
+    @Test
+    void testSortListBasedOnUser_MultipleUsersAccumulated() {
+        // first user
+        this.viewModel.getSelectedUser().set("user1");
+        this.viewModel.sortListBasedOnUser();
+
+        // then user2 gets added to selectedUsers (your logic accumulates users)
+        this.viewModel.getSelectedUser().set("user2");
+        this.viewModel.sortListBasedOnUser();
+
+        assertEquals(2, this.viewModel.getLogs().size());
+        assertTrue(this.viewModel.getLogs().contains(log1));
+        assertTrue(this.viewModel.getLogs().contains(log2));
+        assertFalse(this.viewModel.getLogs().contains(log3));
+    }
+
+    @Test
+    void testSortListBasedOnUser_UserNotFound() {
+        this.viewModel.getSelectedUser().set("nonexistent_user");
+
+        this.viewModel.sortListBasedOnUser();
+
+        assertEquals(0, this.viewModel.getLogs().size());
+    }
+
+    @Test
+    void testSortListBasedOnUser_NullUserDoesNothing() {
+        this.viewModel.getSelectedUser().set(null);
+
+        this.viewModel.sortListBasedOnUser();
+
+        assertEquals(3, this.viewModel.getLogs().size());
+        assertTrue(this.viewModel.getLogs().contains(log1));
+        assertTrue(this.viewModel.getLogs().contains(log2));
+        assertTrue(this.viewModel.getLogs().contains(log3));
+    }
+
+    @Test
+    void testSortListBasedOnUser_AfterReset() {
+        this.viewModel.getSelectedUser().set("user1");
+        this.viewModel.sortListBasedOnUser();
+        assertEquals(1, this.viewModel.getLogs().size());
+
+        this.viewModel.resetSelectedUsers();
+        assertNull(this.viewModel.getSelectedUser().get());
+
+        assertEquals(3, this.viewModel.getLogs().size());
+    }
+
+
 }

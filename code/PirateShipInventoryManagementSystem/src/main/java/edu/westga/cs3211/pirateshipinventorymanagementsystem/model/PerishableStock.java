@@ -49,11 +49,7 @@ public class PerishableStock extends Stock {
 		}
 	}
 	
-	/**
-	 * Returns the expiration date of the perishable stock
-	 * 
-	 * @return expiration date of the perishable stock
-	 */
+	@Override
 	public LocalDate getExpirationDate() {
 		return this.expirationDate;
 	}
