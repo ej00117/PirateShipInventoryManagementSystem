@@ -1,9 +1,13 @@
 package edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel;
 
+import java.time.LocalDateTime;
+
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Change;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.ItemCategory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Role;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Authenticator;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ChangeHistory;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ChangeLog;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Compartment;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Inventory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Stock;
@@ -63,6 +67,7 @@ public class ViewInventoryPageViewModel {
 		} else if (this.auth.getRolesForUser(this.username, this.password).contains(Role.COOK)) {
 			return FXCollections.observableArrayList(compartment.getItems().stream().filter(stock -> stock.getCategory() == ItemCategory.FOOD).toList());
 		} else {
+			
 			return FXCollections.observableArrayList(compartment.getItems().stream().filter(stock -> stock.getCategory() == ItemCategory.MUNITIONS).toList());
 		}
 	}
@@ -82,9 +87,11 @@ public class ViewInventoryPageViewModel {
 		} else if (stock.getQuantity() == quantity) {
 			compartment.removeStock(stock);
 			compartment.setFreeSpace(compartment.getFreeSpace() + quantity);
+			this.history.getHistory().add(new ChangeLog(this.username, stock, Change.REMOVED, compartment.getName(), compartment.getFreeSpace(), LocalDateTime.now()));
 		} else {
 			stock.setQuantity(stock.getQuantity() - quantity);
 			compartment.setFreeSpace(compartment.getFreeSpace() + quantity);
+			this.history.getHistory().add(new ChangeLog(this.username, stock, Change.REMOVED, compartment.getName(), compartment.getFreeSpace(), LocalDateTime.now()));
 		}
 	}
 }
