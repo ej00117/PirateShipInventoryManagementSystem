@@ -82,29 +82,39 @@ public class Inventory {
 	 * @return the compartments 
 	 */
 	public ArrayList<Compartment> getCompartmentsAtType(ArrayList<SpecialQuality> type, Double spaceRequired) {
-		ArrayList<Compartment> compartments = new ArrayList<Compartment>();
-		if (type == null) {
-			throw new IllegalArgumentException(TYPE_CANNOT_BE_NULL);
-		}
-		if (spaceRequired == null) {
-			throw new IllegalArgumentException(SPACE_CANNOT_BE_NULL);
-		}
-		if (spaceRequired < 0) {
-			throw new IllegalArgumentException(SPACE_CANNOT_BE_BELOW_ZERO);
-		}
-		
-		for (Compartment compartment : this.compartments) {
-			if (new HashSet<>(compartment.getType()).equals(new HashSet<>(type))) {
-				if (compartment.getFreeSpace() >= spaceRequired) {
-					compartments.add(compartment);
-				}
-			}
-		}
-		if (!compartments.isEmpty()) {
-			return compartments;
-		}
-		throw new IllegalArgumentException(COMPARTMENT_CANNOT_BE_FOUND);
+	    ArrayList<Compartment> compartments = new ArrayList<Compartment>();
+	    if (type == null) {
+	        throw new IllegalArgumentException(TYPE_CANNOT_BE_NULL);
+	    }
+	    if (spaceRequired == null) {
+	        throw new IllegalArgumentException(SPACE_CANNOT_BE_NULL);
+	    }
+	    if (spaceRequired < 0) {
+	        throw new IllegalArgumentException(SPACE_CANNOT_BE_BELOW_ZERO);
+	    }
+
+	    double maxFreeSpaceForType = 0.0;
+
+	    for (Compartment compartment : this.compartments) {
+	        if (new HashSet<>(compartment.getType()).equals(new HashSet<>(type))) {
+	            double freeSpace = compartment.getFreeSpace();
+	            if (freeSpace >= spaceRequired) {
+	                compartments.add(compartment);
+	            }
+	            if (freeSpace > maxFreeSpaceForType) {
+	                maxFreeSpaceForType = freeSpace;
+	            }
+	        }
+	    }
+
+	    if (!compartments.isEmpty()) {
+	        return compartments;
+	    }
+
+	    throw new IllegalArgumentException(
+	        "No compartment has enough space. Maximum remaining capacity for this type is: "+ maxFreeSpaceForType + " units.");
 	}
+
 	
 	/**
 	 * Returns true or false depending on whether or not there is space in the specified compartment
