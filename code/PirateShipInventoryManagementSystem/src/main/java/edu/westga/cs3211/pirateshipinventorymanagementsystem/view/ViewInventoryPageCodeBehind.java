@@ -6,15 +6,18 @@ import java.util.ResourceBundle;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Authenticator;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ChangeHistory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Compartment;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ExpirationDisplayItem;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Inventory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Stock;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel.ViewInventoryPageViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -51,6 +54,12 @@ public class ViewInventoryPageCodeBehind {
 
     @FXML
     private Button removeStockButton;
+    
+    @FXML
+    private CheckBox showExpirationCheckBox;
+    
+    @FXML
+    private ListView<ExpirationDisplayItem> expirationListView;
     
     private ViewInventoryPageViewModel viewModel;
     
@@ -113,11 +122,27 @@ public class ViewInventoryPageCodeBehind {
         assert this.viewStockUserLabel != null : "fx:id=\"viewStockUserLabel\" was not injected: check your FXML file 'viewinventorypage.fxml'.";
         assert this.quantityTextField != null : "fx:id=\"quantityTextField\" was not injected: check your FXML file 'viewinventorypage.fxml'.";
         assert this.removeStockButton != null : "fx:id=\"removeStockButton\" was not injected: check your FXML file 'viewinventorypage.fxml'.";
+        this.showExpirationCheckBox.selectedProperty().addListener(
+        	    (obs, oldVal, newVal) -> this.switchToExpirationReport(newVal)
+        	);
         this.viewStockUserLabel.setText(this.viewStockUserLabel.getText() + this.auth.getRolesForUser(this.username, this.password).toString());
         this.setupInventoryPageBindings();
     }
+
+	private void switchToExpirationReport(boolean showReport) {
+		if (showReport) {
+	        this.compartmentListView.setVisible(false);
+	        this.expirationListView.setVisible(true);
+	        this.expirationListView.setItems(this.viewModel.getExpirationReport());
+	        this.removeStockButton.setDisable(true);
+	    } else {
+	        this.expirationListView.setVisible(false);
+	        this.compartmentListView.setVisible(true);
+	        this.removeStockButton.setDisable(false);
+	    }
+	}
     
-    private void setupInventoryPageBindings() {
+	private void setupInventoryPageBindings() {
     	this.inventoryListView.setItems(this.viewModel.getCompartments());
     	this.inventoryListView.getSelectionModel().selectedItemProperty().addListener(
     	(obs, oldComp, newComp) -> {
@@ -129,7 +154,7 @@ public class ViewInventoryPageCodeBehind {
     	});
     	this.selectedCompartmentTextField.textProperty().bind(Bindings.createStringBinding(() -> String.valueOf(this.compartmentListView.getSelectionModel().getSelectedItem()), this.compartmentListView.getSelectionModel().selectedItemProperty()));
     }
-    
+
     private void refreshListViews() {
     	this.inventoryListView.setItems(this.viewModel.getCompartments());
     }

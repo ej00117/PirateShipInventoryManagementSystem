@@ -1,6 +1,9 @@
 package edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Change;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.ItemCategory;
@@ -9,7 +12,9 @@ import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Authenticator
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ChangeHistory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ChangeLog;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Compartment;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ExpirationDisplayItem;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Inventory;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.PerishableStock;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Stock;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -93,5 +98,31 @@ public class ViewInventoryPageViewModel {
 			compartment.setFreeSpace(compartment.getFreeSpace() + quantity);
 			this.history.getHistory().add(new ChangeLog(this.username, stock, Change.REMOVED, compartment.getName(), compartment.getFreeSpace(), LocalDateTime.now()));
 		}
+	  }
+	
+	public ObservableList<ExpirationDisplayItem> getExpirationReport() {
+	    var items = this.inventory.getCompartments()
+	            .stream()
+	            .flatMap(c -> c.getItems().stream())
+	            .filter(s -> s instanceof PerishableStock)
+	            .map(s -> {
+	                PerishableStock p = (PerishableStock) s;
+	                int days = (int) ChronoUnit.DAYS.between(LocalDate.now(), p.getExpirationDate());
+
+	                String status;
+	                if (days < 0) {
+	                    status = Math.abs(days) + " days expired";
+	                } else if (days == 0) {
+	                    status = "expires today";
+	                } else {
+	                    status = days + " days left";
+	                }
+
+	                return new ExpirationDisplayItem(p.getName(), p.getQuantity(), status, days);
+	            })
+	            .sorted(Comparator.comparingInt(ExpirationDisplayItem::getDaysRemaining))
+	            .toList();
+
+	    return FXCollections.observableArrayList(items);
 	}
 }
