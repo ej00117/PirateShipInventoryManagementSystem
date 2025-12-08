@@ -146,4 +146,9 @@ class TestLandingPageViewModel {
         viewModel = new LandingPageViewModel(authenticator, "bob", "pass1234");
         assertNotNull(viewModel.getHistory());
     }
+    
+    @Test
+    void testNotCrewmate() {
+    	
+    }
 }

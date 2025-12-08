@@ -60,6 +60,7 @@ class TestConstructor {
 		assertEquals(stock.getName(), "mercury", "checking the name");
 		assertEquals(stock.getQuantity(), 2.0, "checking the quantity");
 		assertEquals(stock.getCategory(), ItemCategory.OTHER, "checking the category");
+		assertEquals(stock.getExpirationDate(), null, "checking the expirationDate");
 		assertEquals(stock.getCondition(), Condition.PERFECT, "checking the condition");
 		assertTrue(stock.getSpecialQualities().contains(SpecialQuality.LIQUID), "checking special quality");
 	}

@@ -98,6 +98,7 @@ public class LandingPageViewModel {
 	
 	/**
 	 * Returns true if user is a crewmate
+	 * Note: Current implementation does not allow for users without crewmate role.
 	 * 
 	 * @return true if is a crewmate
 	 */
@@ -145,7 +146,8 @@ public class LandingPageViewModel {
 	}
 	
 	/**
-	 * Ensure that user can add stock
+	 * Ensure that user can add stock.
+	 * Note: Current Implementation does not allow for users unable to.
 	 * 
 	 * @return true if user can add stock, false if not
 	 */

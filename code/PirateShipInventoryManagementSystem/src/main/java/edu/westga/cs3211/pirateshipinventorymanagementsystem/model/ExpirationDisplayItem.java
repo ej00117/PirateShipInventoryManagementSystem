@@ -30,10 +30,10 @@ public class ExpirationDisplayItem {
         this.status = status;
         this.daysRemaining = daysRemaining;
     }
-
     
     /**
      * gets the name
+     * 
      * @return the name
      */
     public String getName() {

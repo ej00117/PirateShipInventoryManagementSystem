@@ -1,6 +1,7 @@
 package edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel.addstockpageviewmodel;
 
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.Condition;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.ItemCategory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.enums.SpecialQuality;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.*;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel.AddStockPageViewModel;
@@ -50,7 +51,7 @@ class TestAddStockPageViewModel {
         this.viewModel.getSelectedCondition().set(Condition.USABLE);
 
         Stock stock = this.viewModel.prepareStockForInventory();
-
+        
         assertNotNull(stock);
         assertTrue(stock instanceof Stock);
         assertEquals("oil", stock.getName());
@@ -59,6 +60,7 @@ class TestAddStockPageViewModel {
         assertFalse(stock.getSpecialQualities().contains(SpecialQuality.LIQUID));
         assertTrue(stock.getSpecialQualities().contains(SpecialQuality.FLAMMABLE));
         assertFalse(stock.getSpecialQualities().contains(SpecialQuality.PERISHABLE));
+        assertEquals(ItemCategory.OTHER, this.viewModel.getSelectedCategory().getValue());
 
         assertTrue(this.inventory.getCompartments().get(0).addStock(stock));
         assertEquals(0.0, this.inventory.getCompartments().get(0).getFreeSpace());

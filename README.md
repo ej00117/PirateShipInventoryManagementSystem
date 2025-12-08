@@ -19,3 +19,6 @@ cook1234
 OFFICER
 bill
 officer123
+
+Note: Code Coverage will show LandingPageViewModel lacking tests for two methods cases for if a user is not a crewmate.
+	Current implementation only allows users to be created if they contain the role crewmate, unable to test for false case currently.

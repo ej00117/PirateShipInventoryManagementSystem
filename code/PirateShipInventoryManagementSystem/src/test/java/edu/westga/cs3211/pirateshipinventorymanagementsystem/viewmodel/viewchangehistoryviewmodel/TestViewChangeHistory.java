@@ -50,6 +50,7 @@ public class TestViewChangeHistory {
     void testConstructor() {
         assertNotNull(this.viewModel.getLogs());
         assertEquals(3, this.viewModel.getLogs().size());
+        assertEquals(this.history, this.viewModel.getHistory());
         assertTrue(this.viewModel.getUsers().contains("user1"));
         assertTrue(this.viewModel.getUsers().contains("user2"));
         assertTrue(this.viewModel.getUsers().contains("user3"));
@@ -63,8 +64,18 @@ public class TestViewChangeHistory {
         this.viewModel.sortListBasedOnSpecialQualities();
         assertEquals(1, this.viewModel.getLogs().size());
         assertTrue(this.viewModel.getLogs().contains(log3));
-
         this.viewModel.getIsPerishable().set(false);
+        
+        this.viewModel.getIsLiquid().set(true);
+        this.viewModel.sortListBasedOnSpecialQualities();
+        assertEquals(0, this.viewModel.getLogs().size());
+        this.viewModel.getIsLiquid().set(false);
+        
+        this.viewModel.getIsFlammable().set(true);
+        this.viewModel.sortListBasedOnSpecialQualities();
+        assertEquals(0, this.viewModel.getLogs().size());
+        this.viewModel.getIsFlammable().set(false);
+        
         this.viewModel.sortListBasedOnSpecialQualities();
         assertEquals(3, this.viewModel.getLogs().size());
         assertTrue(this.viewModel.getLogs().contains(log1));

@@ -100,14 +100,19 @@ public class ViewInventoryPageViewModel {
 		}
 	  }
 	
+	/**
+	 * Returns an observable list of the expiration display item.
+	 * 
+	 * @return observable list of the expiration display item.
+	 */
 	public ObservableList<ExpirationDisplayItem> getExpirationReport() {
 	    var items = this.inventory.getCompartments()
 	            .stream()
 	            .flatMap(c -> c.getItems().stream())
 	            .filter(s -> s instanceof PerishableStock)
 	            .map(s -> {
-	                PerishableStock p = (PerishableStock) s;
-	                int days = (int) ChronoUnit.DAYS.between(LocalDate.now(), p.getExpirationDate());
+	                PerishableStock perish = (PerishableStock) s;
+	                int days = (int) ChronoUnit.DAYS.between(LocalDate.now(), perish.getExpirationDate());
 
 	                String status;
 	                if (days < 0) {
@@ -118,7 +123,7 @@ public class ViewInventoryPageViewModel {
 	                    status = days + " days left";
 	                }
 
-	                return new ExpirationDisplayItem(p.getName(), p.getQuantity(), status, days);
+	                return new ExpirationDisplayItem(perish.getName(), perish.getQuantity(), status, days);
 	            })
 	            .sorted(Comparator.comparingInt(ExpirationDisplayItem::getDaysRemaining))
 	            .toList();

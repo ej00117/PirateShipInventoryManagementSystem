@@ -21,7 +21,6 @@ public class Inventory {
 	private static final String TYPE_CANNOT_BE_NULL = "special quality types cannot be null.";
 	private static final String SPACE_CANNOT_BE_NULL = "space required cannot be null.";
 	private static final String SPACE_CANNOT_BE_BELOW_ZERO = "space required cannot be less than zero.";
-	private static final String COMPARTMENT_CANNOT_BE_FOUND = "compartment with enough space of specified type could not be found.";
 	private ArrayList<Compartment> compartments;
 
 	/**
@@ -112,10 +111,9 @@ public class Inventory {
 	    }
 
 	    throw new IllegalArgumentException(
-	        "No compartment has enough space. Maximum remaining capacity for this type is: "+ maxFreeSpaceForType + " units.");
+	        "No compartment has enough space. Maximum remaining capacity for this type is: " + maxFreeSpaceForType + " units.");
 	}
 
-	
 	/**
 	 * Returns true or false depending on whether or not there is space in the specified compartment
 	 * 
