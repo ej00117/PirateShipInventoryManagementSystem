@@ -129,4 +129,36 @@ class TestExpirationReport {
 
         assertEquals(expected, item.toString());
     }
+    
+    @Test
+    void testItemExpiresToday() {
+        ArrayList<Compartment> compartments = new ArrayList<>();
+
+        ArrayList<SpecialQuality> perishable = new ArrayList<>();
+        perishable.add(SpecialQuality.PERISHABLE);
+
+        Compartment comp = new Compartment("Food", 100.0, perishable);
+
+        comp.addStock(new PerishableStock(
+                "Soup", 5.0, ItemCategory.FOOD, Condition.PERFECT,
+                perishable, LocalDate.now()));
+
+        compartments.add(comp);
+
+        Inventory inv = new Inventory(compartments);
+        ViewInventoryPageViewModel vm2 =
+                new ViewInventoryPageViewModel(inv, new ChangeHistory(), "user", "pass");
+
+        ObservableList<ExpirationDisplayItem> report = vm2.getExpirationReport();
+
+        assertEquals(1, report.size(), "Should contain exactly one item");
+
+        ExpirationDisplayItem item = report.get(0);
+
+        assertEquals("Soup", item.getName());
+        assertEquals(5.0, item.getQuantity());
+        assertEquals(0, item.getDaysRemaining());
+        assertEquals("expires today", item.getStatus());
+    }
+
 }
