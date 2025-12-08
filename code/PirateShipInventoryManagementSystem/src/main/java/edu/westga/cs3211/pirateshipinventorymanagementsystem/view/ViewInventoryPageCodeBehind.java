@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Authenticator;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ChangeHistory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Compartment;
+import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.ExpirationDisplayItem;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Inventory;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.model.Stock;
 import edu.westga.cs3211.pirateshipinventorymanagementsystem.viewmodel.ViewInventoryPageViewModel;
@@ -56,6 +57,9 @@ public class ViewInventoryPageCodeBehind {
     
     @FXML
     private CheckBox showExpirationCheckBox;
+    
+    @FXML
+    private ListView<ExpirationDisplayItem> expirationListView;
     
     private ViewInventoryPageViewModel viewModel;
     
@@ -118,63 +122,37 @@ public class ViewInventoryPageCodeBehind {
         assert this.viewStockUserLabel != null : "fx:id=\"viewStockUserLabel\" was not injected: check your FXML file 'viewinventorypage.fxml'.";
         assert this.quantityTextField != null : "fx:id=\"quantityTextField\" was not injected: check your FXML file 'viewinventorypage.fxml'.";
         assert this.removeStockButton != null : "fx:id=\"removeStockButton\" was not injected: check your FXML file 'viewinventorypage.fxml'.";
+        this.showExpirationCheckBox.selectedProperty().addListener(
+        	    (obs, oldVal, newVal) -> this.switchToExpirationReport(newVal)
+        	);
         this.viewStockUserLabel.setText(this.viewStockUserLabel.getText() + this.auth.getRolesForUser(this.username, this.password).toString());
         this.setupInventoryPageBindings();
     }
+
+	private void switchToExpirationReport(boolean showReport) {
+		if (showReport) {
+	        this.compartmentListView.setVisible(false);
+	        this.expirationListView.setVisible(true);
+	        this.expirationListView.setItems(this.viewModel.getExpirationReport());
+	        this.removeStockButton.setDisable(true);
+	    } else {
+	        this.expirationListView.setVisible(false);
+	        this.compartmentListView.setVisible(true);
+	        this.removeStockButton.setDisable(false);
+	    }
+	}
     
-    private void setupInventoryPageBindings() {
-        this.inventoryListView.setItems(this.viewModel.getCompartments());
-
-        this.inventoryListView.getSelectionModel().selectedItemProperty().addListener(
-        (obs, oldComp, newComp) -> {
-            if (newComp != null) {
-                this.updateStockDisplay(newComp);
-            } else {
-                this.compartmentListView.setItems(FXCollections.observableArrayList());
-            }
-        });
-
-        this.showExpirationCheckBox.selectedProperty().addListener((obs, oldVal, newVal) -> {
-            Compartment current = this.inventoryListView.getSelectionModel().getSelectedItem();
-            if (current != null) {
-                this.updateStockDisplay(current);
-            }
-        });
-
-        this.selectedCompartmentTextField.textProperty().bind(
-            Bindings.createStringBinding(
-                () -> String.valueOf(this.compartmentListView.getSelectionModel().getSelectedItem()),
-                this.compartmentListView.getSelectionModel().selectedItemProperty()
-            )
-        );
-    }
-    
-    private void updateStockDisplay(Compartment compartment) {
-        ObservableList<Stock> list = this.viewModel.getStock(compartment);
-
-        if (this.showExpirationCheckBox.isSelected()) {
-            FXCollections.sort(list, (a, b) -> {
-                boolean aPerishable = a instanceof edu.westga.cs3211.pirateshipinventorymanagementsystem.model.PerishableStock;
-                boolean bPerishable = b instanceof edu.westga.cs3211.pirateshipinventorymanagementsystem.model.PerishableStock;
-
-                if (aPerishable && bPerishable) {
-                    var pa = (edu.westga.cs3211.pirateshipinventorymanagementsystem.model.PerishableStock) a;
-                    var pb = (edu.westga.cs3211.pirateshipinventorymanagementsystem.model.PerishableStock) b;
-                    return pa.getExpirationDate().compareTo(pb.getExpirationDate());
-                }
-
-                if (aPerishable) {
-                	return -1;
-            }
-                if (bPerishable) {
-                	return 1;
-            }
-
-                return 0;
-            });
-        }
-
-        this.compartmentListView.setItems(list);
+	private void setupInventoryPageBindings() {
+    	this.inventoryListView.setItems(this.viewModel.getCompartments());
+    	this.inventoryListView.getSelectionModel().selectedItemProperty().addListener(
+    	(obs, oldComp, newComp) -> {
+    		if (newComp != null) {
+    			this.compartmentListView.setItems(this.viewModel.getStock(newComp));
+    		} else {
+    			this.compartmentListView.setItems(FXCollections.observableArrayList());
+    		}
+    	});
+    	this.selectedCompartmentTextField.textProperty().bind(Bindings.createStringBinding(() -> String.valueOf(this.compartmentListView.getSelectionModel().getSelectedItem()), this.compartmentListView.getSelectionModel().selectedItemProperty()));
     }
 
     private void refreshListViews() {

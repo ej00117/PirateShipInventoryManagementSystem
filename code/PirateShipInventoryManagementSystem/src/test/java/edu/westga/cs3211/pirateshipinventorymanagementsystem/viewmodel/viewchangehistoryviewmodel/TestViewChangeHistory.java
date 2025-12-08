@@ -187,11 +187,9 @@ public class TestViewChangeHistory {
 
     @Test
     void testSortListBasedOnUser_MultipleUsersAccumulated() {
-        // first user
         this.viewModel.getSelectedUser().set("user1");
         this.viewModel.sortListBasedOnUser();
 
-        // then user2 gets added to selectedUsers (your logic accumulates users)
         this.viewModel.getSelectedUser().set("user2");
         this.viewModel.sortListBasedOnUser();
 
@@ -233,6 +231,77 @@ public class TestViewChangeHistory {
 
         assertEquals(3, this.viewModel.getLogs().size());
     }
+    
+    @Test
+    void testFilterByExpirationDateRange_InclusiveBoundaries() {
+        LocalDate expirationDay = LocalDate.now();
+
+        PerishableStock midStock = new PerishableStock(
+                "mid food", 
+                10.0, 
+                ItemCategory.FOOD, 
+                Condition.USABLE, 
+                new ArrayList<>(Collections.singletonList(SpecialQuality.PERISHABLE)),
+                expirationDay
+        );
+        ChangeLog midLog = new ChangeLog("user4", midStock, Change.ADDED, "compartment4", 10.0, LocalDateTime.now());
+        this.history.getHistory().add(midLog);
+
+        this.viewModel = new ViewChangeHistoryViewModel(this.history);
+
+        this.viewModel.getStartExpirationDate().set(expirationDay);
+        this.viewModel.getEndExpirationDate().set(expirationDay);
+
+        this.viewModel.filterByExpirationDateRange();
+
+        assertTrue(this.viewModel.getLogs().contains(midLog), "Expiration equal to START should pass");
+        assertTrue(this.viewModel.getLogs().contains(log3), "Expiration equal to END should pass");
+
+        assertFalse(this.viewModel.getLogs().contains(log1));
+        assertFalse(this.viewModel.getLogs().contains(log2));
+    }
+    
+    @Test
+    void testFilterByExpirationDateRange_ExpirationAfterStartButBeforeEnd() {
+        LocalDate today = LocalDate.now();
+
+        LocalDate start = today.minusDays(5);
+        LocalDate end = today.plusDays(5);
+
+        PerishableStock midRangeStock = new PerishableStock(
+                "mid-range food",
+                5.0,
+                ItemCategory.FOOD,
+                Condition.USABLE,
+                new ArrayList<>(Collections.singletonList(SpecialQuality.PERISHABLE)),
+                today.plusDays(1)
+        );
+
+        ChangeLog midRangeLog = new ChangeLog(
+                "user5",
+                midRangeStock,
+                Change.ADDED,
+                "compartmentX",
+                10.0,
+                LocalDateTime.now()
+        );
+
+        this.history.getHistory().add(midRangeLog);
+
+        this.viewModel = new ViewChangeHistoryViewModel(this.history);
+
+        this.viewModel.getStartExpirationDate().set(start);
+        this.viewModel.getEndExpirationDate().set(end);
+
+        this.viewModel.filterByExpirationDateRange();
+
+        assertTrue(this.viewModel.getLogs().contains(midRangeLog),
+                "Expiration AFTER start but BEFORE end should be included");
+
+        assertFalse(this.viewModel.getLogs().contains(log1));
+        assertFalse(this.viewModel.getLogs().contains(log2));
+    }
+
 
 
 }
